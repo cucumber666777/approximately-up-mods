@@ -159,6 +159,7 @@ const categories = ["All", ...new Set(mods.map((mod) => mod.category))];
 let currentLang = localStorage.getItem("auModsLang") || "ru";
 let selectedCategory = "All";
 let selectedModId = null;
+let lastDetailBackground = null;
 const detailBackgrounds = [
   "assets/detail-backgrounds/background-1.png",
   "assets/detail-backgrounds/background-2.png",
@@ -247,7 +248,12 @@ function renderMods() {
 }
 
 function setRandomDetailBackground() {
-  const image = detailBackgrounds[Math.floor(Math.random() * detailBackgrounds.length)];
+  let available = detailBackgrounds;
+  if (detailBackgrounds.length > 1 && lastDetailBackground) {
+    available = detailBackgrounds.filter((image) => image !== lastDetailBackground);
+  }
+  const image = available[Math.floor(Math.random() * available.length)];
+  lastDetailBackground = image;
   document.body.classList.add("detail-page");
   document.body.style.setProperty("--detail-bg-image", `url("${image}")`);
 }
