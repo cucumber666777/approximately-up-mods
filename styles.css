@@ -475,7 +475,7 @@ dialog::backdrop {
 }
 
 .screenshot-art {
-  height: 170px;
+  height: 220px;
   display: grid;
   place-items: center;
   background:
@@ -513,4 +513,11 @@ dialog::backdrop {
   .screenshots {
     grid-template-columns: 1fr;
   }
+}
+.screenshot-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  background: #0c1118;
 }
