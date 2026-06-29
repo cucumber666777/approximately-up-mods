@@ -91,7 +91,9 @@ main {
   min-width: 220px;
 }
 
-.hero-stats span {
+.hero-stats .stat-card {
+  display: grid;
+  gap: 0.25rem;
   padding: 0.9rem 1rem;
   background: rgba(18, 24, 33, 0.78);
   border: 1px solid var(--line);
@@ -99,10 +101,17 @@ main {
   color: var(--muted);
 }
 
-.hero-stats strong {
+.hero-stats .stat-card strong {
   display: block;
   color: var(--text);
   font-size: 1.3rem;
+  line-height: 1.15;
+}
+
+.hero-stats .stat-card span {
+  display: block;
+  color: var(--muted);
+  line-height: 1.25;
 }
 
 .primary-button,
