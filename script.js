@@ -60,7 +60,7 @@ const i18n = {
     "download": "Download",
     "details": "Details",
     "screenshots": "Screenshots",
-    "backToCatalog": "\\u2190 Back to catalog",
+    "backToCatalog": "\u2190 Back to catalog",
     "notFoundTitle": "Nothing found",
     "notFoundText": "Try another search or category.",
     "gameBuildInfo": "Game build",
