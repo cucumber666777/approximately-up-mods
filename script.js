@@ -201,7 +201,7 @@ function applyLanguage() {
   document.querySelectorAll("[data-i18n-aria]").forEach((node) => { node.setAttribute("aria-label", t(node.dataset.i18nAria)); });
   document.querySelectorAll(".lang-button").forEach((button) => { button.classList.toggle("active", button.dataset.lang === currentLang); });
   renderMods();
-  if (selectedModId) showModDetail(selectedModId, false);
+  if (selectedModId) showModDetail(selectedModId, false, false);
 }
 
 function renderChips() {
@@ -258,10 +258,13 @@ function setRandomDetailBackground() {
   document.body.style.setProperty("--detail-bg-image", `url("${image}")`);
 }
 
-function showModDetail(modId, shouldScroll = true) {
+function showModDetail(modId, shouldScroll = true, updateHistory = true) {
   const mod = mods.find((item) => item.id === modId);
   if (!mod) return;
   selectedModId = modId;
+  if (updateHistory && (!history.state || history.state.modId !== modId)) {
+    history.pushState({ modId }, "", `#${modId}`);
+  }
   controlsSection.hidden = true;
   catalogContent.hidden = true;
   detailSection.hidden = false;
@@ -280,7 +283,10 @@ function showModDetail(modId, shouldScroll = true) {
   if (shouldScroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function hideModDetail() {
+function hideModDetail(updateHistory = true) {
+  if (updateHistory && selectedModId && location.hash) {
+    history.pushState(null, "", location.pathname + location.search);
+  }
   selectedModId = null;
   detailSection.hidden = true;
   controlsSection.hidden = false;
@@ -292,7 +298,23 @@ function hideModDetail() {
 document.querySelectorAll(".lang-button").forEach((button) => {
   button.addEventListener("click", () => { currentLang = button.dataset.lang; localStorage.setItem("auModsLang", currentLang); applyLanguage(); });
 });
-backToCatalog.addEventListener("click", hideModDetail);
+backToCatalog.addEventListener("click", () => hideModDetail());
+window.addEventListener("popstate", (event) => {
+  if (event.state && event.state.modId) {
+    showModDetail(event.state.modId, false, false);
+    return;
+  }
+  if (selectedModId) {
+    hideModDetail(false);
+  }
+});
+if (location.hash) {
+  const modId = location.hash.slice(1);
+  if (mods.some((mod) => mod.id === modId)) {
+    history.replaceState({ modId }, "", location.href);
+    showModDetail(modId, false, false);
+  }
+}
 document.querySelector("#openUpload").addEventListener("click", () => { if (typeof uploadDialog.showModal === "function") uploadDialog.showModal(); });
 search.addEventListener("input", renderMods);
 renderChips();
