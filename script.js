@@ -159,6 +159,13 @@ const categories = ["All", ...new Set(mods.map((mod) => mod.category))];
 let currentLang = localStorage.getItem("auModsLang") || "ru";
 let selectedCategory = "All";
 let selectedModId = null;
+const detailBackgrounds = [
+  "assets/detail-backgrounds/background-1.png",
+  "assets/detail-backgrounds/background-2.png",
+  "assets/detail-backgrounds/background-3.png",
+  "assets/detail-backgrounds/background-4.png",
+  "assets/detail-backgrounds/background-5.png"
+];
 
 const grid = document.querySelector("#modsGrid");
 const chips = document.querySelector("#categoryChips");
@@ -239,6 +246,12 @@ function renderMods() {
   });
 }
 
+function setRandomDetailBackground() {
+  const image = detailBackgrounds[Math.floor(Math.random() * detailBackgrounds.length)];
+  document.body.classList.add("detail-page");
+  document.body.style.setProperty("--detail-bg-image", `url("${image}")`);
+}
+
 function showModDetail(modId, shouldScroll = true) {
   const mod = mods.find((item) => item.id === modId);
   if (!mod) return;
@@ -246,6 +259,7 @@ function showModDetail(modId, shouldScroll = true) {
   controlsSection.hidden = true;
   catalogContent.hidden = true;
   detailSection.hidden = false;
+  setRandomDetailBackground();
   detailMeta.innerHTML = `<span class="tag">${mod.category}</span><span class="tag">v${mod.version}</span>`;
   detailTitle.textContent = mod.name;
   detailSummary.textContent = mod.longDescription[currentLang] || mod.summary[currentLang];
@@ -265,6 +279,8 @@ function hideModDetail() {
   detailSection.hidden = true;
   controlsSection.hidden = false;
   catalogContent.hidden = false;
+  document.body.classList.remove("detail-page");
+  document.body.style.removeProperty("--detail-bg-image");
 }
 
 document.querySelectorAll(".lang-button").forEach((button) => {

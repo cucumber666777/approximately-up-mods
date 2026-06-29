@@ -522,3 +522,22 @@ dialog::backdrop {
   display: block;
   background: #0c1118;
 }
+body.detail-page {
+  background:
+    linear-gradient(180deg, rgba(5, 7, 10, 0.28) 0%, rgba(5, 7, 10, 0.48) 46%, rgba(5, 7, 10, 0.72) 100%),
+    var(--detail-bg-image) center center / cover fixed no-repeat,
+    #05070a;
+}
+
+body.detail-page .detail-main,
+body.detail-page .detail-info,
+body.detail-page .screenshot-card,
+body.detail-page .sidebar,
+body.detail-page .mod-card {
+  background: rgba(10, 14, 20, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+body.detail-page .topbar {
+  background: rgba(8, 11, 15, 0.62);
+}
