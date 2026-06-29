@@ -368,3 +368,149 @@ dialog::backdrop {
   background: var(--blue);
   color: #03101d;
 }
+.mod-detail[hidden],
+.content[hidden],
+.controls[hidden] {
+  display: none;
+}
+
+.mod-detail {
+  margin-bottom: 1.25rem;
+}
+
+.back-button {
+  border: 1px solid var(--line);
+  background: rgba(18, 24, 33, 0.82);
+  color: var(--text);
+  border-radius: 8px;
+  min-height: 2.6rem;
+  padding: 0 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.detail-main,
+.detail-info,
+.screenshot-card {
+  background: rgba(18, 24, 33, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.detail-main {
+  padding: clamp(1.1rem, 3vw, 2rem);
+}
+
+.detail-main h2 {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  line-height: 1;
+  margin: 0.7rem 0 1rem;
+}
+
+.detail-main p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 780px;
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.detail-actions {
+  margin-top: 1.25rem;
+}
+
+.detail-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.detail-info {
+  padding: 1rem;
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+}
+
+.detail-info div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.detail-info strong {
+  color: var(--text);
+}
+
+.detail-info span {
+  color: var(--muted);
+}
+
+.screenshots {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.screenshots h3 {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.screenshot-card {
+  overflow: hidden;
+}
+
+.screenshot-art {
+  height: 170px;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(135deg, rgba(72, 168, 255, 0.22), rgba(64, 217, 139, 0.12)),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.05), rgba(255,255,255,0.05) 1px, transparent 1px, transparent 18px),
+    #0c1118;
+  color: rgba(238, 244, 255, 0.68);
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.screenshot-card span {
+  display: block;
+  padding: 0.8rem 0.9rem;
+  color: var(--muted);
+}
+
+.mod-card {
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.mod-card:hover,
+.mod-card:focus-visible {
+  border-color: var(--blue);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.details-button {
+  font: inherit;
+}
+
+@media (max-width: 780px) {
+  .detail-layout,
+  .screenshots {
+    grid-template-columns: 1fr;
+  }
+}
