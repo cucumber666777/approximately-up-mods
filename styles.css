@@ -20,8 +20,9 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 20% 10%, rgba(72, 168, 255, 0.16), transparent 28rem),
-    linear-gradient(180deg, #0b1118 0%, var(--bg) 44%, #05070a 100%);
+    linear-gradient(180deg, rgba(5, 7, 10, 0.76) 0%, rgba(5, 7, 10, 0.88) 48%, rgba(5, 7, 10, 0.96) 100%),
+    url("assets/site-background.png") center top / cover fixed no-repeat,
+    #05070a;
   color: var(--text);
   font-family: Inter, Segoe UI, Arial, sans-serif;
 }
