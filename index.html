@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Approximately Up Mods</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Community mod hub</p>
+      <h1>Approximately Up Mods</h1>
+    </div>
+    <div class="top-actions">
+      <div class="language-switch" aria-label="Language">
+        <button class="lang-button active" type="button" data-lang="ru">RU</button>
+        <button class="lang-button" type="button" data-lang="en">EN</button>
+      </div>
+      <button class="primary-button" id="openUpload" data-i18n="uploadButton"></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <h2 data-i18n="heroTitle"></h2>
+        <p data-i18n="heroText"></p>
+      </div>
+      <div class="hero-stats" data-i18n-aria="statsAria">
+        <span><strong id="modCount">0</strong> <span data-i18n="modsCountLabel"></span></span>
+        <span><strong>23954373</strong> <span data-i18n="currentBuildLabel"></span></span>
+      </div>
+    </section>
+
+    <section class="controls" data-i18n-aria="filtersAria">
+      <label class="search">
+        <span data-i18n="searchLabel"></span>
+        <input id="searchInput" type="search" data-i18n-placeholder="searchPlaceholder">
+      </label>
+      <div class="chips" id="categoryChips"></div>
+    </section>
+
+    <section class="content">
+      <aside class="sidebar">
+        <h3 data-i18n="compatTitle"></h3>
+        <p data-i18n="compatText"></p>
+        <div class="legend">
+          <span><i class="dot ok"></i><span data-i18n="statusOk"></span></span>
+          <span><i class="dot warn"></i><span data-i18n="statusWarn"></span></span>
+          <span><i class="dot bad"></i><span data-i18n="statusBad"></span></span>
+        </div>
+      </aside>
+
+      <section class="mods-grid" id="modsGrid" data-i18n-aria="modsListAria"></section>
+    </section>
+  </main>
+
+  <dialog id="uploadDialog">
+    <form method="dialog" class="upload-form">
+      <div class="dialog-head">
+        <h2 data-i18n="uploadTitle"></h2>
+        <button class="icon-button" value="cancel" data-i18n-aria="closeAria">x</button>
+      </div>
+      <label>
+        <span data-i18n="fieldName"></span>
+        <input type="text" data-i18n-placeholder="fieldNamePlaceholder">
+      </label>
+      <label>
+        <span data-i18n="fieldCategory"></span>
+        <select>
+          <option>Tools</option>
+          <option>Planets</option>
+          <option>Gameplay</option>
+          <option>Map</option>
+          <option>Cosmetic</option>
+        </select>
+      </label>
+      <label>
+        <span data-i18n="fieldGameVersion"></span>
+        <input type="text" placeholder="23954373">
+      </label>
+      <label>
+        <span data-i18n="fieldFile"></span>
+        <input type="file" accept=".zip,.dll">
+      </label>
+      <label>
+        <span data-i18n="fieldDescription"></span>
+        <textarea rows="4" data-i18n-placeholder="fieldDescriptionPlaceholder"></textarea>
+      </label>
+      <button class="primary-button" value="default" data-i18n="saveDraft"></button>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
