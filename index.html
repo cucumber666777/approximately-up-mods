@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Approximately Up Mods</title>
-  <link rel="stylesheet" href="styles.css?v=20260630-accounts-link">
+  <link rel="stylesheet" href="styles.css?v=20260630-one-catalog">
 </head>
 <body>
   <header class="topbar">
@@ -17,7 +17,7 @@
         <button class="lang-button active" type="button" data-lang="ru">RU</button>
         <button class="lang-button" type="button" data-lang="en">EN</button>
       </div>
-      <a class="secondary-link" href="accounts/" data-i18n="accountsButton"></a>
+      <button class="secondary-button" id="accountButton" type="button" data-i18n="accountButton"></button>
       <button class="primary-button" id="openUpload" data-i18n="uploadButton"></button>
     </div>
   </header>
@@ -64,6 +64,7 @@
       <aside class="sidebar">
         <h3 data-i18n="compatTitle"></h3>
         <p data-i18n="compatText"></p>
+        <div class="account-panel" id="accountPanel"></div>
         <div class="legend">
           <span><i class="dot ok"></i><span data-i18n="statusOk"></span></span>
           <span><i class="dot warn"></i><span data-i18n="statusWarn"></span></span>
@@ -83,11 +84,11 @@
       </div>
       <label>
         <span data-i18n="fieldName"></span>
-        <input type="text" data-i18n-placeholder="fieldNamePlaceholder">
+        <input id="modNameInput" type="text" data-i18n-placeholder="fieldNamePlaceholder">
       </label>
       <label>
         <span data-i18n="fieldCategory"></span>
-        <select>
+        <select id="modCategoryInput">
           <option>Tools</option>
           <option>Planets</option>
           <option>Gameplay</option>
@@ -97,22 +98,49 @@
       </label>
       <label>
         <span data-i18n="fieldGameVersion"></span>
-        <input type="text" placeholder="23954373">
+        <input id="modBuildInput" type="text" placeholder="23954373">
       </label>
       <label>
         <span data-i18n="fieldFile"></span>
-        <input type="file" accept=".zip,.dll">
+        <input id="modFileInput" type="file" accept=".zip,.dll">
       </label>
       <label>
         <span data-i18n="fieldDescription"></span>
-        <textarea rows="4" data-i18n-placeholder="fieldDescriptionPlaceholder"></textarea>
+        <textarea id="modDescriptionInput" rows="4" data-i18n-placeholder="fieldDescriptionPlaceholder"></textarea>
       </label>
-      <button class="primary-button" value="default" data-i18n="saveDraft"></button>
+      <button class="primary-button" id="saveDraftButton" type="button" data-i18n="saveDraft"></button>
+      <p class="notice" id="uploadMessage"></p>
     </form>
   </dialog>
 
-  <script src="script.js?v=20260630-accounts-link"></script>
+
+  <dialog id="accountDialog">
+    <form method="dialog" class="upload-form">
+      <div class="dialog-head">
+        <h2 data-i18n="accountTitle"></h2>
+        <button class="icon-button" value="cancel" data-i18n-aria="closeAria">x</button>
+      </div>
+      <p class="muted" data-i18n="accountHelp"></p>
+      <label>
+        <span>Email</span>
+        <input id="emailInput" type="email" autocomplete="email">
+      </label>
+      <label>
+        <span data-i18n="passwordLabel"></span>
+        <input id="passwordInput" type="password" autocomplete="current-password">
+      </label>
+      <div class="button-row">
+        <button class="primary-button" id="loginButton" type="button" data-i18n="loginButton"></button>
+        <button class="secondary-button" id="signupButton" type="button" data-i18n="signupButton"></button>
+      </div>
+      <p class="notice" id="accountMessage"></p>
+    </form>
+  </dialog>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js?v=20260630-one-catalog"></script>
+  <script src="script.js?v=20260630-one-catalog"></script>
 </body>
 </html>
+
 
 

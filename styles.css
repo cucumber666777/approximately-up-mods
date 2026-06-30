@@ -119,6 +119,7 @@ main {
 }
 
 .primary-button,
+.secondary-button,
 .chip,
 .download,
 .icon-button {
@@ -541,5 +542,40 @@ body.detail-page .mod-card {
 body.detail-page .topbar {
   background: rgba(8, 11, 15, 0.62);
 }
-.secondary-link { border: 1px solid var(--line); background: rgba(24, 34, 49, 0.9); color: var(--text); border-radius: 8px; min-height: 2.6rem; padding: 0 1rem; display: inline-flex; align-items: center; text-decoration: none; font-weight: 700; }
+.secondary-button {
+  background: rgba(24, 34, 49, 0.9);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.account-panel {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.account-panel h4 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.account-panel p,
+.muted,
+.notice {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.notice {
+  min-height: 1.25rem;
+  margin: 0;
+  color: var(--yellow);
+}
+
+.button-row {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
 

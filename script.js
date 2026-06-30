@@ -1,7 +1,24 @@
 ﻿const i18n = {
   "ru": {
     "uploadButton": "\u0412\u044b\u043b\u043e\u0436\u0438\u0442\u044c \u043c\u043e\u0434",
-    "accountsButton": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442\u044b",
+    "accountButton": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442",
+    "logoutButton": "\u0412\u044b\u0439\u0442\u0438",
+    "accountTitle": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442",
+    "accountHelp": "\u0421\u0435\u0439\u0447\u0430\u0441 \u0430\u043a\u043a\u0430\u0443\u043d\u0442 \u0441\u043e\u0445\u0440\u0430\u043d\u044f\u0435\u0442\u0441\u044f \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435. \u041f\u043e\u0437\u0436\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u043c Supabase \u0438 \u0441\u0434\u0435\u043b\u0430\u0435\u043c \u0432\u0441\u0451 \u043f\u043e-\u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0435\u043c\u0443.",
+    "passwordLabel": "\u041f\u0430\u0440\u043e\u043b\u044c",
+    "loginButton": "\u0412\u043e\u0439\u0442\u0438",
+    "signupButton": "\u0421\u043e\u0437\u0434\u0430\u0442\u044c",
+    "profileTitle": "\u041f\u0440\u043e\u0444\u0438\u043b\u044c",
+    "guestName": "\u0413\u043e\u0441\u0442\u044c",
+    "guestText": "\u0412\u043e\u0439\u0434\u0438 \u0438\u043b\u0438 \u0441\u043e\u0437\u0434\u0430\u0439 \u0430\u043a\u043a\u0430\u0443\u043d\u0442, \u0447\u0442\u043e\u0431\u044b \u0441\u043e\u0445\u0440\u0430\u043d\u044f\u0442\u044c \u0447\u0435\u0440\u043d\u043e\u0432\u0438\u043a\u0438.",
+    "draftsLabel": "\u0427\u0435\u0440\u043d\u043e\u0432\u0438\u043a\u0438",
+    "fillAuth": "\u0412\u0432\u0435\u0434\u0438 email \u0438 \u043f\u0430\u0440\u043e\u043b\u044c.",
+    "signupOk": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442 \u0441\u043e\u0437\u0434\u0430\u043d.",
+    "loginOk": "\u0412\u0445\u043e\u0434 \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d.",
+    "accountExists": "\u0422\u0430\u043a\u043e\u0439 email \u0443\u0436\u0435 \u0435\u0441\u0442\u044c.",
+    "accountMissing": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d \u0438\u043b\u0438 \u043f\u0430\u0440\u043e\u043b\u044c \u043d\u0435\u0432\u0435\u0440\u043d\u044b\u0439.",
+    "draftSaved": "\u0427\u0435\u0440\u043d\u043e\u0432\u0438\u043a \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d \u0432 \u043a\u0430\u0442\u0430\u043b\u043e\u0433.",
+    "draftNeedName": "\u041d\u0443\u0436\u043d\u043e \u0445\u043e\u0442\u044f \u0431\u044b \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u043c\u043e\u0434\u0430.",
     "heroTitle": "\u041c\u043e\u0434\u044b, \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b \u0438 \u043f\u043b\u0430\u043d\u0435\u0442\u044b \u0434\u043b\u044f Approximately Up",
     "heroText": "\u041f\u0435\u0440\u0432\u044b\u0439 \u043f\u0440\u043e\u0442\u043e\u0442\u0438\u043f \u043a\u0430\u0442\u0430\u043b\u043e\u0433\u0430: \u043f\u043e\u0438\u0441\u043a, \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438, \u0432\u0435\u0440\u0441\u0438\u0438 \u0438\u0433\u0440\u044b \u0438 \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u0441\u043a\u0430\u0447\u0438\u0432\u0430\u043d\u0438\u044f \u0443\u0436\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u044e\u0442 \u043f\u0440\u044f\u043c\u043e \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435.",
     "modsCountLabel": "\u043c\u043e\u0434\u043e\u0432",
@@ -38,7 +55,24 @@
   },
   "en": {
     "uploadButton": "Upload mod",
-    "accountsButton": "Accounts",
+    "accountButton": "Account",
+    "logoutButton": "Log out",
+    "accountTitle": "Account",
+    "accountHelp": "For now the account is saved in this browser. Later we will connect Supabase and make it real.",
+    "passwordLabel": "Password",
+    "loginButton": "Log in",
+    "signupButton": "Create",
+    "profileTitle": "Profile",
+    "guestName": "Guest",
+    "guestText": "Log in or create an account to save drafts.",
+    "draftsLabel": "Drafts",
+    "fillAuth": "Enter email and password.",
+    "signupOk": "Account created.",
+    "loginOk": "Logged in.",
+    "accountExists": "This email already exists.",
+    "accountMissing": "Account not found or password is wrong.",
+    "draftSaved": "Draft added to the catalog.",
+    "draftNeedName": "The mod needs at least a name.",
     "heroTitle": "Mods, tools and planets for Approximately Up",
     "heroText": "A first working catalog prototype: search, categories, game builds and download cards already work directly in the browser.",
     "modsCountLabel": "mods",
@@ -75,7 +109,7 @@
   }
 };
 
-const mods = [
+const baseMods = [
   {
     "id": "planet-runtime-editor",
     "name": "Planet Runtime Editor",
@@ -157,7 +191,22 @@ const mods = [
   }
 ];
 
-const categories = ["All", ...new Set(mods.map((mod) => mod.category))];
+let serverMods = [];
+let draftMods = JSON.parse(localStorage.getItem("auModsDrafts") || "[]");
+let localUsers = JSON.parse(localStorage.getItem("auModsUsers") || "[]");
+let sessionUser = JSON.parse(localStorage.getItem("auModsUser") || "null");
+let supabaseClient = null;
+const supabaseConfig = window.AU_SUPABASE || {};
+const hasSupabase = Boolean(supabaseConfig.url && supabaseConfig.anonKey && window.supabase);
+if (hasSupabase) supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey);
+
+function getAllMods() {
+  return [...baseMods, ...serverMods, ...draftMods.map((mod) => ({ ...mod, status: mod.status || "warn", file: mod.file || "#" }))];
+}
+
+function getCategories() {
+  return ["All", ...new Set(getAllMods().map((mod) => mod.category || "Tools"))];
+}
 let currentLang = localStorage.getItem("auModsLang") || "ru";
 let selectedCategory = "All";
 let selectedModId = null;
@@ -185,6 +234,11 @@ const detailSummary = document.querySelector("#detailSummary");
 const detailDownload = document.querySelector("#detailDownload");
 const detailInfo = document.querySelector("#detailInfo");
 const detailScreenshots = document.querySelector("#detailScreenshots");
+const accountDialog = document.querySelector("#accountDialog");
+const accountButton = document.querySelector("#accountButton");
+const accountPanel = document.querySelector("#accountPanel");
+const accountMessage = document.querySelector("#accountMessage");
+const uploadMessage = document.querySelector("#uploadMessage");
 
 function t(key) {
   return i18n[currentLang][key] || i18n.en[key] || key;
@@ -202,13 +256,26 @@ function applyLanguage() {
   document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => { node.placeholder = t(node.dataset.i18nPlaceholder); });
   document.querySelectorAll("[data-i18n-aria]").forEach((node) => { node.setAttribute("aria-label", t(node.dataset.i18nAria)); });
   document.querySelectorAll(".lang-button").forEach((button) => { button.classList.toggle("active", button.dataset.lang === currentLang); });
+  if (accountButton) accountButton.textContent = sessionUser ? t("logoutButton") : t("accountButton");
+  renderAccountPanel();
+  renderChips();
   renderMods();
   if (selectedModId) showModDetail(selectedModId, false, false);
 }
 
+function renderAccountPanel() {
+  if (!accountPanel) return;
+  const name = sessionUser?.email || t("guestName");
+  accountPanel.innerHTML = `
+    <h4>${t("profileTitle")}</h4>
+    <p>${sessionUser ? name : t("guestText")}</p>
+    <div class="meta"><span class="tag">${t("draftsLabel")}: ${draftMods.length}</span><span class="tag">${hasSupabase ? "Supabase" : "Demo"}</span></div>
+  `;
+}
+
 function renderChips() {
   chips.innerHTML = "";
-  categories.forEach((category) => {
+  getCategories().forEach((category) => {
     const button = document.createElement("button");
     button.className = `chip${category === selectedCategory ? " active" : ""}`;
     button.textContent = category;
@@ -219,9 +286,10 @@ function renderChips() {
 
 function renderMods() {
   const query = search.value.trim().toLowerCase();
-  const filtered = mods.filter((mod) => {
+  const filtered = getAllMods().filter((mod) => {
     const matchesCategory = selectedCategory === "All" || mod.category === selectedCategory;
-    const text = `${mod.name} ${mod.category} ${mod.summary[currentLang]}`.toLowerCase();
+    const summary = mod.summary?.[currentLang] || mod.summary?.en || mod.description || "";
+    const text = `${mod.name} ${mod.category} ${summary}`.toLowerCase();
     return matchesCategory && text.includes(query);
   });
   modCount.textContent = filtered.length;
@@ -231,17 +299,18 @@ function renderMods() {
     return;
   }
   filtered.forEach((mod) => {
+    const summary = mod.summary?.[currentLang] || mod.summary?.en || mod.description || "";
     const card = document.createElement("article");
     card.className = "mod-card";
     card.tabIndex = 0;
     card.setAttribute("role", "button");
     card.innerHTML = `
-      <div class="meta"><span class="tag">${mod.category}</span><span class="tag">v${mod.version}</span></div>
+      <div class="meta"><span class="tag">${mod.category || "Tools"}</span><span class="tag">v${mod.version || "draft"}</span></div>
       <h3>${mod.name}</h3>
-      <p>${mod.summary[currentLang]}</p>
-      <div class="status"><i class="dot ${mod.status}"></i>${statusLabel(mod.status)}</div>
-      <div class="meta"><span class="tag">Build ${mod.gameBuild}</span><span class="tag">${mod.loader}</span></div>
-      <div class="card-footer"><button class="download details-button" type="button">${t("details")}</button><a class="download" href="${mod.file}" download>${t("download")}</a></div>
+      <p>${summary}</p>
+      <div class="status"><i class="dot ${mod.status || "warn"}"></i>${statusLabel(mod.status)}</div>
+      <div class="meta"><span class="tag">Build ${mod.gameBuild || "unknown"}</span><span class="tag">${mod.loader || "MelonLoader"}</span></div>
+      <div class="card-footer"><button class="download details-button" type="button">${t("details")}</button><a class="download" href="${mod.file || "#"}" ${mod.file && mod.file !== "#" ? "download" : ""}>${t("download")}</a></div>
     `;
     card.addEventListener("click", (event) => { if (event.target.closest("a")) return; showModDetail(mod.id); });
     card.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); showModDetail(mod.id); } });
@@ -261,7 +330,7 @@ function setRandomDetailBackground() {
 }
 
 function showModDetail(modId, shouldScroll = true, updateHistory = true) {
-  const mod = mods.find((item) => item.id === modId);
+  const mod = getAllMods().find((item) => item.id === modId);
   if (!mod) return;
   selectedModId = modId;
   if (updateHistory && (!history.state || history.state.modId !== modId)) {
@@ -271,17 +340,21 @@ function showModDetail(modId, shouldScroll = true, updateHistory = true) {
   catalogContent.hidden = true;
   detailSection.hidden = false;
   setRandomDetailBackground();
-  detailMeta.innerHTML = `<span class="tag">${mod.category}</span><span class="tag">v${mod.version}</span>`;
+  detailMeta.innerHTML = `<span class="tag">${mod.category || "Tools"}</span><span class="tag">v${mod.version || "draft"}</span>`;
   detailTitle.textContent = mod.name;
-  detailSummary.textContent = mod.longDescription[currentLang] || mod.summary[currentLang];
-  detailDownload.href = mod.file;
+  detailSummary.textContent = mod.longDescription?.[currentLang] || mod.summary?.[currentLang] || mod.summary?.en || mod.description || "";
+  detailDownload.href = mod.file || "#";
   detailDownload.textContent = t("download");
-  detailInfo.innerHTML = `<div><strong>${t("gameBuildInfo")}</strong><span>${mod.gameBuild}</span></div><div><strong>${t("loaderInfo")}</strong><span>${mod.loader}</span></div><div><strong>${t("statusInfo")}</strong><span>${statusLabel(mod.status)}</span></div>`;
-  detailScreenshots.innerHTML = `<h3>${t("screenshots")}</h3>` + mod.screenshots.map((shot, index) => `
-    <div class="screenshot-card">
-      ${shot.image ? `<img class="screenshot-image" src="${shot.image}" alt="${shot.title[currentLang] || shot.title.en || mod.name}">` : `<div class="screenshot-art">${index + 1}</div>`}
-      <span>${shot.title[currentLang] || shot.title.en || shot}</span>
-    </div>`).join("");
+  if (mod.file && mod.file !== "#") detailDownload.setAttribute("download", ""); else detailDownload.removeAttribute("download");
+  detailInfo.innerHTML = `<div><strong>${t("gameBuildInfo")}</strong><span>${mod.gameBuild || "unknown"}</span></div><div><strong>${t("loaderInfo")}</strong><span>${mod.loader || "MelonLoader"}</span></div><div><strong>${t("statusInfo")}</strong><span>${statusLabel(mod.status)}</span></div>`;
+  const screenshots = mod.screenshots || [];
+  detailScreenshots.innerHTML = `<h3>${t("screenshots")}</h3>` + screenshots.map((shot, index) => {
+    const title = shot.title?.[currentLang] || shot.title?.en || shot.title || mod.name;
+    return `<div class="screenshot-card">
+      ${shot.image ? `<img class="screenshot-image" src="${shot.image}" alt="${title}">` : `<div class="screenshot-art">${index + 1}</div>`}
+      <span>${title}</span>
+    </div>`;
+  }).join("");
   if (shouldScroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -295,6 +368,91 @@ function hideModDetail(updateHistory = true) {
   catalogContent.hidden = false;
   document.body.classList.remove("detail-page");
   document.body.style.removeProperty("--detail-bg-image");
+}
+
+async function loadSession() {
+  if (!supabaseClient) return;
+  const { data } = await supabaseClient.auth.getSession();
+  if (data.session?.user) {
+    sessionUser = { email: data.session.user.email, id: data.session.user.id, live: true };
+    localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
+  }
+}
+
+async function loadModsFromSupabase() {
+  if (!supabaseClient) return;
+  const { data, error } = await supabaseClient.from("mods").select("*").eq("published", true).order("created_at", { ascending: false });
+  if (!error && Array.isArray(data)) {
+    serverMods = data.map((row) => ({
+      id: row.id,
+      name: row.name,
+      category: row.category || "Tools",
+      version: row.version || "0.1.0",
+      gameBuild: row.game_build || "unknown",
+      loader: row.loader || "MelonLoader",
+      status: row.status || "warn",
+      summary: { ru: row.summary_ru || row.description || "", en: row.summary_en || row.description || "" },
+      file: row.file_url || "#"
+    }));
+  }
+}
+
+async function auth(mode) {
+  const email = document.querySelector("#emailInput").value.trim().toLowerCase();
+  const password = document.querySelector("#passwordInput").value;
+  if (!email || !password) { accountMessage.textContent = t("fillAuth"); return; }
+
+  if (!supabaseClient) {
+    const existing = localUsers.find((user) => user.email === email);
+    if (mode === "signup") {
+      if (existing) { accountMessage.textContent = t("accountExists"); return; }
+      const user = { email, password, id: `local-${Date.now()}` };
+      localUsers.unshift(user);
+      localStorage.setItem("auModsUsers", JSON.stringify(localUsers));
+      sessionUser = { email, id: user.id, local: true };
+      localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
+      accountMessage.textContent = t("signupOk");
+      setTimeout(() => { accountDialog.close(); applyLanguage(); }, 350);
+      return;
+    }
+    if (!existing || existing.password !== password) { accountMessage.textContent = t("accountMissing"); return; }
+    sessionUser = { email, id: existing.id, local: true };
+    localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
+    accountMessage.textContent = t("loginOk");
+    setTimeout(() => { accountDialog.close(); applyLanguage(); }, 350);
+    return;
+  }
+
+  const result = mode === "signup"
+    ? await supabaseClient.auth.signUp({ email, password })
+    : await supabaseClient.auth.signInWithPassword({ email, password });
+  if (result.error) { accountMessage.textContent = result.error.message; return; }
+  sessionUser = { email, id: result.data.user?.id, live: true };
+  localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
+  accountDialog.close();
+  applyLanguage();
+}
+
+function saveDraft() {
+  const name = document.querySelector("#modNameInput").value.trim();
+  if (!name) { uploadMessage.textContent = t("draftNeedName"); return; }
+  const description = document.querySelector("#modDescriptionInput").value.trim();
+  draftMods.unshift({
+    id: `draft-${Date.now()}`,
+    name,
+    category: document.querySelector("#modCategoryInput").value,
+    version: "draft",
+    gameBuild: document.querySelector("#modBuildInput").value.trim() || "23954373",
+    loader: "MelonLoader",
+    summary: { ru: description, en: description },
+    description,
+    screenshots: []
+  });
+  localStorage.setItem("auModsDrafts", JSON.stringify(draftMods));
+  uploadMessage.textContent = t("draftSaved");
+  renderAccountPanel();
+  renderChips();
+  renderMods();
 }
 
 document.querySelectorAll(".lang-button").forEach((button) => {
@@ -312,13 +470,31 @@ window.addEventListener("popstate", (event) => {
 });
 if (location.hash) {
   const modId = location.hash.slice(1);
-  if (mods.some((mod) => mod.id === modId)) {
+  if (getAllMods().some((mod) => mod.id === modId)) {
     history.replaceState({ modId }, "", location.href);
     showModDetail(modId, false, false);
   }
 }
-document.querySelector("#openUpload").addEventListener("click", () => { if (typeof uploadDialog.showModal === "function") uploadDialog.showModal(); });
+document.querySelector("#openUpload").addEventListener("click", () => { if (typeof uploadDialog.showModal === "function") { uploadMessage.textContent = ""; uploadDialog.showModal(); } });
+accountButton.addEventListener("click", async () => {
+  if (sessionUser) {
+    if (supabaseClient && sessionUser.live) await supabaseClient.auth.signOut();
+    sessionUser = null;
+    localStorage.removeItem("auModsUser");
+    applyLanguage();
+    return;
+  }
+  accountMessage.textContent = "";
+  accountDialog.showModal();
+});
+document.querySelector("#loginButton").addEventListener("click", () => auth("login"));
+document.querySelector("#signupButton").addEventListener("click", () => auth("signup"));
+document.querySelector("#saveDraftButton").addEventListener("click", saveDraft);
 search.addEventListener("input", renderMods);
-renderChips();
-applyLanguage();
 
+(async function init() {
+  await loadSession();
+  await loadModsFromSupabase();
+  renderChips();
+  applyLanguage();
+})();

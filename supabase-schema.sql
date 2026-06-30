@@ -1,4 +1,4 @@
-﻿-- Supabase schema for Approximately Up Mods V2
+﻿-- Supabase schema for Approximately Up Mods
 -- Run this in Supabase SQL Editor after creating a project.
 
 create table if not exists public.mods (
