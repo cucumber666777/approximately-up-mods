@@ -281,8 +281,9 @@ function applyLanguage() {
   document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => { node.placeholder = t(node.dataset.i18nPlaceholder); });
   document.querySelectorAll("[data-i18n-aria]").forEach((node) => { node.setAttribute("aria-label", t(node.dataset.i18nAria)); });
   document.querySelectorAll(".lang-button").forEach((button) => { button.classList.toggle("active", button.dataset.lang === currentLang); });
-  if (accountButton) accountButton.textContent = sessionUser ? t("logoutButton") : t("accountButton");
+  renderProfileButton();
   renderAccountPanel();
+  renderProfileMenu();
   renderChips();
   renderMods();
   if (selectedModId) showModDetail(selectedModId, false, false);
@@ -308,7 +309,8 @@ function accountStatusText() {
 function renderProfileButton() {
   if (!accountButton || !profileAvatar || !profileName) return;
   const name = getDisplayName();
-  profileAvatar.textContent = getInitials(name);
+  profileAvatar.src = sessionUser?.avatar || "assets/default-avatar.png";
+  profileAvatar.alt = name;
   profileName.textContent = name;
   accountButton.setAttribute("aria-label", t("profileMenuAria"));
 }
@@ -321,7 +323,7 @@ function renderProfileMenu() {
     : `<button class="profile-menu-item" type="button" data-profile-action="login">${t("openAccountSettings")}</button>`;
   profileMenu.innerHTML = `
     <div class="profile-menu-head">
-      <span class="avatar large">${getInitials(name)}</span>
+      <img class="avatar avatar-image large" src="${sessionUser?.avatar || "assets/default-avatar.png"}" alt="${name}">
       <div><strong>${name}</strong><small>${accountStatusText()}</small></div>
     </div>
     <button class="profile-menu-item" type="button" data-profile-action="upload">${t("menuUploadMod")}</button>
@@ -604,4 +606,8 @@ search.addEventListener("input", renderMods);
   renderChips();
   applyLanguage();
 })();
+
+
+
+
 

@@ -341,6 +341,7 @@ dialog::backdrop {
   gap: 0.75rem;
   flex-wrap: wrap;
   justify-content: flex-end;
+  min-width: 0;
 }
 
 .language-switch {
@@ -582,6 +583,8 @@ body.detail-page .topbar {
 
 .profile-menu-wrap {
   position: relative;
+  order: 10;
+  flex: 0 0 auto;
 }
 
 .profile-button {
@@ -589,7 +592,7 @@ body.detail-page .topbar {
   border: 1px solid var(--line);
   background: rgba(24, 34, 49, 0.9);
   color: var(--text);
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 0.25rem 0.85rem 0.25rem 0.3rem;
   display: inline-flex;
   align-items: center;
@@ -713,3 +716,10 @@ body.detail-page .topbar {
 }
 
 
+
+
+
+.avatar-image {
+  object-fit: cover;
+  border: 1px solid rgba(238, 244, 255, 0.28);
+}
