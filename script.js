@@ -662,12 +662,21 @@ document.querySelector("#signupButton").addEventListener("click", () => auth("si
 document.querySelector("#saveDraftButton").addEventListener("click", saveDraft);
 search.addEventListener("input", renderMods);
 
+
+function updateParallaxBackground() {
+  const y = Math.round(window.scrollY * -0.18);
+  document.body.style.setProperty("--parallax-y", `${y}px`);
+}
+
+window.addEventListener("scroll", () => requestAnimationFrame(updateParallaxBackground), { passive: true });
+window.addEventListener("resize", updateParallaxBackground);
 (async function init() {
   await loadSession();
   await loadModsFromSupabase();
   renderChips();
   applyLanguage();
 })();
+
 
 
 
