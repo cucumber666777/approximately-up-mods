@@ -312,6 +312,13 @@ function getInitials(name) {
   return clean.slice(0, 1).toUpperCase();
 }
 
+function escapeAttribute(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
 function accountStatusText() {
   if (!sessionUser) return t("accountStatusGuest");
   if (sessionUser.live) return t("accountStatusLive");
@@ -339,7 +346,7 @@ function renderProfileMenu() {
       <div><strong>${name}</strong><small>${accountStatusText()}</small></div>
     </div>
     <div class="profile-settings">
-      <label><span>${t("profileNameLabel")}</span><input id="profileNicknameInput" type="text" value="${profileSettings.nickname || ""}" placeholder="${name}"></label>
+      <label><span>${t("profileNameLabel")}</span><input id="profileNicknameInput" type="text" value="${escapeAttribute(profileSettings.nickname || "")}" placeholder="${escapeAttribute(name)}"></label>
       <label><span>${t("profileAvatarLabel")}</span><input id="profileAvatarInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
       <div class="button-row compact"><button class="secondary-button" type="button" data-profile-action="save-profile">${t("profileSave")}</button><button class="profile-menu-item small" type="button" data-profile-action="reset-avatar">${t("profileResetAvatar")}</button></div>
       <p class="notice profile-save-message" id="profileSaveMessage"></p>
@@ -367,7 +374,7 @@ function renderAccountPanel() {
   const name = sessionUser?.email || t("guestName");
   accountPanel.innerHTML = `
     <h4>${t("profileTitle")}</h4>
-    <p>${sessionUser ? name : t("guestText")}</p>
+    <p>${sessionUser || profileSettings.nickname ? name : t("guestText")}</p>
     <div class="meta"><span class="tag">${t("draftsLabel")}: ${draftMods.length}</span><span class="tag">${hasSupabase ? "Supabase" : "Demo"}</span></div>
   `;
 }
@@ -627,6 +634,14 @@ profileMenu.addEventListener("click", async (event) => {
     applyLanguage();
     return;
   }
+  if (action === "save-profile") {
+    await updateProfileFromMenu();
+    return;
+  }
+  if (action === "reset-avatar") {
+    resetProfileAvatar();
+    return;
+  }
   if (action === "upload") {
     uploadMessage.textContent = "";
     uploadDialog.showModal();
@@ -638,6 +653,15 @@ profileMenu.addEventListener("click", async (event) => {
     renderMods();
     window.scrollTo({ top: document.querySelector(".content").offsetTop - 90, behavior: "smooth" });
   }
+});
+profileMenu.addEventListener("change", async (event) => {
+  if (event.target?.id !== "profileAvatarInput") return;
+  const file = event.target.files?.[0];
+  if (!file) return;
+  profileSettings.avatar = await readAvatarFile(file);
+  saveProfileSettings();
+  applyLanguage();
+  setProfileMenuOpen(true);
 });
 document.addEventListener("click", (event) => {
   if (!event.target.closest(".profile-menu-wrap")) setProfileMenuOpen(false);
@@ -656,6 +680,8 @@ search.addEventListener("input", renderMods);
   renderChips();
   applyLanguage();
 })();
+
+
 
 
 
