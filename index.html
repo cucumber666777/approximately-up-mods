@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Approximately Up Mods</title>
-  <link rel="stylesheet" href="styles.css?v=20260630-one-catalog">
+  <link rel="stylesheet" href="styles.css?v=20260630-square-avatar">
 </head>
 <body>
   <header class="topbar">
@@ -17,7 +17,13 @@
         <button class="lang-button active" type="button" data-lang="ru">RU</button>
         <button class="lang-button" type="button" data-lang="en">EN</button>
       </div>
-      <button class="secondary-button" id="accountButton" type="button" data-i18n="accountButton"></button>
+            <div class="profile-menu-wrap">
+        <button class="profile-button" id="accountButton" type="button" aria-expanded="false" aria-controls="profileMenu">
+          <span class="avatar" id="profileAvatar">?</span>
+          <span class="profile-name" id="profileName"></span>
+        </button>
+        <div class="profile-menu" id="profileMenu" hidden></div>
+      </div>
       <button class="primary-button" id="openUpload" data-i18n="uploadButton"></button>
     </div>
   </header>
@@ -138,9 +144,11 @@
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js?v=20260630-one-catalog"></script>
-  <script src="script.js?v=20260630-one-catalog"></script>
+  <script src="script.js?v=20260630-profile-menu"></script>
 </body>
 </html>
+
+
 
 
 

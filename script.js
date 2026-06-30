@@ -3,6 +3,17 @@
     "uploadButton": "\u0412\u044b\u043b\u043e\u0436\u0438\u0442\u044c \u043c\u043e\u0434",
     "accountButton": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442",
     "logoutButton": "\u0412\u044b\u0439\u0442\u0438",
+    "profileSettings": "\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438",
+    "profileMenuAria": "\u041c\u0435\u043d\u044e \u043f\u0440\u043e\u0444\u0438\u043b\u044f",
+    "accountStatusGuest": "\u0413\u043e\u0441\u0442\u0435\u0432\u043e\u0439 \u0440\u0435\u0436\u0438\u043c",
+    "accountStatusLocal": "\u0414\u0435\u043c\u043e-\u0430\u043a\u043a\u0430\u0443\u043d\u0442",
+    "accountStatusLive": "Supabase",
+    "openAccountSettings": "\u0412\u0445\u043e\u0434 \u0438 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044f",
+    "menuUploadMod": "\u0412\u044b\u043b\u043e\u0436\u0438\u0442\u044c \u043c\u043e\u0434",
+    "menuDrafts": "\u041c\u043e\u0438 \u0447\u0435\u0440\u043d\u043e\u0432\u0438\u043a\u0438",
+    "menuLanguage": "\u042f\u0437\u044b\u043a",
+    "menuBackend": "\u0425\u0440\u0430\u043d\u0435\u043d\u0438\u0435",
+    "menuComingSoon": "\u041f\u043e\u0437\u0436\u0435 \u0437\u0434\u0435\u0441\u044c \u0431\u0443\u0434\u0443\u0442 \u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0438\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 Supabase.",
     "accountTitle": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442",
     "accountHelp": "\u0421\u0435\u0439\u0447\u0430\u0441 \u0430\u043a\u043a\u0430\u0443\u043d\u0442 \u0441\u043e\u0445\u0440\u0430\u043d\u044f\u0435\u0442\u0441\u044f \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435. \u041f\u043e\u0437\u0436\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u043c Supabase \u0438 \u0441\u0434\u0435\u043b\u0430\u0435\u043c \u0432\u0441\u0451 \u043f\u043e-\u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0435\u043c\u0443.",
     "passwordLabel": "\u041f\u0430\u0440\u043e\u043b\u044c",
@@ -57,6 +68,17 @@
     "uploadButton": "Upload mod",
     "accountButton": "Account",
     "logoutButton": "Log out",
+    "profileSettings": "Settings",
+    "profileMenuAria": "Profile menu",
+    "accountStatusGuest": "Guest mode",
+    "accountStatusLocal": "Demo account",
+    "accountStatusLive": "Supabase",
+    "openAccountSettings": "Log in and sign up",
+    "menuUploadMod": "Upload mod",
+    "menuDrafts": "My drafts",
+    "menuLanguage": "Language",
+    "menuBackend": "Storage",
+    "menuComingSoon": "Real Supabase settings will appear here later.",
     "accountTitle": "Account",
     "accountHelp": "For now the account is saved in this browser. Later we will connect Supabase and make it real.",
     "passwordLabel": "Password",
@@ -238,6 +260,9 @@ const accountDialog = document.querySelector("#accountDialog");
 const accountButton = document.querySelector("#accountButton");
 const accountPanel = document.querySelector("#accountPanel");
 const accountMessage = document.querySelector("#accountMessage");
+const profileAvatar = document.querySelector("#profileAvatar");
+const profileName = document.querySelector("#profileName");
+const profileMenu = document.querySelector("#profileMenu");
 const uploadMessage = document.querySelector("#uploadMessage");
 
 function t(key) {
@@ -263,6 +288,60 @@ function applyLanguage() {
   if (selectedModId) showModDetail(selectedModId, false, false);
 }
 
+
+function getDisplayName() {
+  if (!sessionUser?.email) return t("guestName");
+  return sessionUser.email.split("@")[0] || sessionUser.email;
+}
+
+function getInitials(name) {
+  const clean = (name || t("guestName")).trim();
+  return clean.slice(0, 1).toUpperCase();
+}
+
+function accountStatusText() {
+  if (!sessionUser) return t("accountStatusGuest");
+  if (sessionUser.live) return t("accountStatusLive");
+  return t("accountStatusLocal");
+}
+
+function renderProfileButton() {
+  if (!accountButton || !profileAvatar || !profileName) return;
+  const name = getDisplayName();
+  profileAvatar.textContent = getInitials(name);
+  profileName.textContent = name;
+  accountButton.setAttribute("aria-label", t("profileMenuAria"));
+}
+
+function renderProfileMenu() {
+  if (!profileMenu) return;
+  const name = getDisplayName();
+  const actionButton = sessionUser
+    ? `<button class="profile-menu-item danger" type="button" data-profile-action="logout">${t("logoutButton")}</button>`
+    : `<button class="profile-menu-item" type="button" data-profile-action="login">${t("openAccountSettings")}</button>`;
+  profileMenu.innerHTML = `
+    <div class="profile-menu-head">
+      <span class="avatar large">${getInitials(name)}</span>
+      <div><strong>${name}</strong><small>${accountStatusText()}</small></div>
+    </div>
+    <button class="profile-menu-item" type="button" data-profile-action="upload">${t("menuUploadMod")}</button>
+    <button class="profile-menu-item" type="button" data-profile-action="drafts">${t("menuDrafts")}: ${draftMods.length}</button>
+    <div class="profile-menu-note"><strong>${t("menuLanguage")}</strong><span>${currentLang.toUpperCase()}</span></div>
+    <div class="profile-menu-note"><strong>${t("menuBackend")}</strong><span>${hasSupabase ? "Supabase" : "Demo"}</span></div>
+    <p>${t("menuComingSoon")}</p>
+    ${actionButton}
+  `;
+}
+
+function setProfileMenuOpen(isOpen) {
+  if (!profileMenu || !accountButton) return;
+  profileMenu.hidden = !isOpen;
+  accountButton.setAttribute("aria-expanded", String(isOpen));
+}
+
+function toggleProfileMenu() {
+  setProfileMenuOpen(profileMenu.hidden);
+}
 function renderAccountPanel() {
   if (!accountPanel) return;
   const name = sessionUser?.email || t("guestName");
@@ -476,16 +555,43 @@ if (location.hash) {
   }
 }
 document.querySelector("#openUpload").addEventListener("click", () => { if (typeof uploadDialog.showModal === "function") { uploadMessage.textContent = ""; uploadDialog.showModal(); } });
-accountButton.addEventListener("click", async () => {
-  if (sessionUser) {
-    if (supabaseClient && sessionUser.live) await supabaseClient.auth.signOut();
+accountButton.addEventListener("click", (event) => {
+  event.stopPropagation();
+  toggleProfileMenu();
+});
+profileMenu.addEventListener("click", async (event) => {
+  const action = event.target.closest("[data-profile-action]")?.dataset.profileAction;
+  if (!action) return;
+  setProfileMenuOpen(false);
+  if (action === "login") {
+    accountMessage.textContent = "";
+    accountDialog.showModal();
+    return;
+  }
+  if (action === "logout") {
+    if (supabaseClient && sessionUser?.live) await supabaseClient.auth.signOut();
     sessionUser = null;
     localStorage.removeItem("auModsUser");
     applyLanguage();
     return;
   }
-  accountMessage.textContent = "";
-  accountDialog.showModal();
+  if (action === "upload") {
+    uploadMessage.textContent = "";
+    uploadDialog.showModal();
+    return;
+  }
+  if (action === "drafts") {
+    selectedCategory = "All";
+    renderChips();
+    renderMods();
+    window.scrollTo({ top: document.querySelector(".content").offsetTop - 90, behavior: "smooth" });
+  }
+});
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".profile-menu-wrap")) setProfileMenuOpen(false);
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") setProfileMenuOpen(false);
 });
 document.querySelector("#loginButton").addEventListener("click", () => auth("login"));
 document.querySelector("#signupButton").addEventListener("click", () => auth("signup"));
@@ -498,3 +604,4 @@ search.addEventListener("input", renderMods);
   renderChips();
   applyLanguage();
 })();
+
