@@ -4,6 +4,11 @@
     "accountButton": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442",
     "logoutButton": "\u0412\u044b\u0439\u0442\u0438",
     "profileSettings": "\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438",
+    "profileNameLabel": "\u041d\u0438\u043a\u043d\u0435\u0439\u043c",
+    "profileAvatarLabel": "\u0410\u0432\u0430\u0442\u0430\u0440",
+    "profileSave": "\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c",
+    "profileResetAvatar": "\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0430\u0432\u0430\u0442\u0430\u0440",
+    "profileSaved": "\u041f\u0440\u043e\u0444\u0438\u043b\u044c \u043e\u0431\u043d\u043e\u0432\u043b\u0451\u043d.",
     "profileMenuAria": "\u041c\u0435\u043d\u044e \u043f\u0440\u043e\u0444\u0438\u043b\u044f",
     "accountStatusGuest": "\u0413\u043e\u0441\u0442\u0435\u0432\u043e\u0439 \u0440\u0435\u0436\u0438\u043c",
     "accountStatusLocal": "\u0414\u0435\u043c\u043e-\u0430\u043a\u043a\u0430\u0443\u043d\u0442",
@@ -69,6 +74,11 @@
     "accountButton": "Account",
     "logoutButton": "Log out",
     "profileSettings": "Settings",
+    "profileNameLabel": "Nickname",
+    "profileAvatarLabel": "Avatar",
+    "profileSave": "Save",
+    "profileResetAvatar": "Reset avatar",
+    "profileSaved": "Profile updated.",
     "profileMenuAria": "Profile menu",
     "accountStatusGuest": "Guest mode",
     "accountStatusLocal": "Demo account",
@@ -217,6 +227,7 @@ let serverMods = [];
 let draftMods = JSON.parse(localStorage.getItem("auModsDrafts") || "[]");
 let localUsers = JSON.parse(localStorage.getItem("auModsUsers") || "[]");
 let sessionUser = JSON.parse(localStorage.getItem("auModsUser") || "null");
+let profileSettings = JSON.parse(localStorage.getItem("auModsProfile") || "{}");
 let supabaseClient = null;
 const supabaseConfig = window.AU_SUPABASE || {};
 const hasSupabase = Boolean(supabaseConfig.url && supabaseConfig.anonKey && window.supabase);
@@ -291,6 +302,7 @@ function applyLanguage() {
 
 
 function getDisplayName() {
+  if (profileSettings.nickname) return profileSettings.nickname;
   if (!sessionUser?.email) return t("guestName");
   return sessionUser.email.split("@")[0] || sessionUser.email;
 }
@@ -309,7 +321,7 @@ function accountStatusText() {
 function renderProfileButton() {
   if (!accountButton || !profileAvatar || !profileName) return;
   const name = getDisplayName();
-  profileAvatar.src = sessionUser?.avatar || "assets/default-avatar.png";
+  profileAvatar.src = profileSettings.avatar || sessionUser?.avatar || "assets/default-avatar.png";
   profileAvatar.alt = name;
   profileName.textContent = name;
   accountButton.setAttribute("aria-label", t("profileMenuAria"));
@@ -323,8 +335,14 @@ function renderProfileMenu() {
     : `<button class="profile-menu-item" type="button" data-profile-action="login">${t("openAccountSettings")}</button>`;
   profileMenu.innerHTML = `
     <div class="profile-menu-head">
-      <img class="avatar avatar-image large" src="${sessionUser?.avatar || "assets/default-avatar.png"}" alt="${name}">
+      <img class="avatar avatar-image large" src="${profileSettings.avatar || sessionUser?.avatar || "assets/default-avatar.png"}" alt="${name}">
       <div><strong>${name}</strong><small>${accountStatusText()}</small></div>
+    </div>
+    <div class="profile-settings">
+      <label><span>${t("profileNameLabel")}</span><input id="profileNicknameInput" type="text" value="${profileSettings.nickname || ""}" placeholder="${name}"></label>
+      <label><span>${t("profileAvatarLabel")}</span><input id="profileAvatarInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+      <div class="button-row compact"><button class="secondary-button" type="button" data-profile-action="save-profile">${t("profileSave")}</button><button class="profile-menu-item small" type="button" data-profile-action="reset-avatar">${t("profileResetAvatar")}</button></div>
+      <p class="notice profile-save-message" id="profileSaveMessage"></p>
     </div>
     <button class="profile-menu-item" type="button" data-profile-action="upload">${t("menuUploadMod")}</button>
     <button class="profile-menu-item" type="button" data-profile-action="drafts">${t("menuDrafts")}: ${draftMods.length}</button>
@@ -514,6 +532,38 @@ async function auth(mode) {
   applyLanguage();
 }
 
+function readAvatarFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function saveProfileSettings() {
+  localStorage.setItem("auModsProfile", JSON.stringify(profileSettings));
+}
+
+async function updateProfileFromMenu() {
+  const input = document.querySelector("#profileNicknameInput");
+  const avatarInput = document.querySelector("#profileAvatarInput");
+  const nickname = input?.value.trim() || "";
+  if (nickname) profileSettings.nickname = nickname; else delete profileSettings.nickname;
+  if (avatarInput?.files?.[0]) profileSettings.avatar = await readAvatarFile(avatarInput.files[0]);
+  saveProfileSettings();
+  applyLanguage();
+  setProfileMenuOpen(true);
+  const message = document.querySelector("#profileSaveMessage");
+  if (message) message.textContent = t("profileSaved");
+}
+
+function resetProfileAvatar() {
+  delete profileSettings.avatar;
+  saveProfileSettings();
+  applyLanguage();
+  setProfileMenuOpen(true);
+}
 function saveDraft() {
   const name = document.querySelector("#modNameInput").value.trim();
   if (!name) { uploadMessage.textContent = t("draftNeedName"); return; }
@@ -606,6 +656,7 @@ search.addEventListener("input", renderMods);
   renderChips();
   applyLanguage();
 })();
+
 
 
 

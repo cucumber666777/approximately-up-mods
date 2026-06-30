@@ -723,3 +723,42 @@ body.detail-page .topbar {
   object-fit: cover;
   border: 1px solid rgba(238, 244, 255, 0.28);
 }
+
+.profile-settings {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.7rem 0.45rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0.45rem;
+}
+
+.profile-settings label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.profile-settings label span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.profile-settings input[type="text"],
+.profile-settings input[type="file"] {
+  min-height: 2.35rem;
+  font-size: 0.9rem;
+}
+
+.button-row.compact {
+  gap: 0.45rem;
+}
+
+.button-row.compact .secondary-button,
+.profile-menu-item.small {
+  min-height: 2.25rem;
+  font-size: 0.88rem;
+}
+
+.profile-save-message {
+  min-height: 1rem;
+  font-size: 0.82rem;
+}
