@@ -541,3 +541,5 @@ body.detail-page .mod-card {
 body.detail-page .topbar {
   background: rgba(8, 11, 15, 0.62);
 }
+.secondary-link { border: 1px solid var(--line); background: rgba(24, 34, 49, 0.9); color: var(--text); border-radius: 8px; min-height: 2.6rem; padding: 0 1rem; display: inline-flex; align-items: center; text-decoration: none; font-weight: 700; }
+

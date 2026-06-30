@@ -1,6 +1,7 @@
-const i18n = {
+﻿const i18n = {
   "ru": {
     "uploadButton": "\u0412\u044b\u043b\u043e\u0436\u0438\u0442\u044c \u043c\u043e\u0434",
+    "accountsButton": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442\u044b",
     "heroTitle": "\u041c\u043e\u0434\u044b, \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b \u0438 \u043f\u043b\u0430\u043d\u0435\u0442\u044b \u0434\u043b\u044f Approximately Up",
     "heroText": "\u041f\u0435\u0440\u0432\u044b\u0439 \u043f\u0440\u043e\u0442\u043e\u0442\u0438\u043f \u043a\u0430\u0442\u0430\u043b\u043e\u0433\u0430: \u043f\u043e\u0438\u0441\u043a, \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438, \u0432\u0435\u0440\u0441\u0438\u0438 \u0438\u0433\u0440\u044b \u0438 \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u0441\u043a\u0430\u0447\u0438\u0432\u0430\u043d\u0438\u044f \u0443\u0436\u0435 \u0440\u0430\u0431\u043e\u0442\u0430\u044e\u0442 \u043f\u0440\u044f\u043c\u043e \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435.",
     "modsCountLabel": "\u043c\u043e\u0434\u043e\u0432",
@@ -37,6 +38,7 @@ const i18n = {
   },
   "en": {
     "uploadButton": "Upload mod",
+    "accountsButton": "Accounts",
     "heroTitle": "Mods, tools and planets for Approximately Up",
     "heroText": "A first working catalog prototype: search, categories, game builds and download cards already work directly in the browser.",
     "modsCountLabel": "mods",
@@ -319,3 +321,4 @@ document.querySelector("#openUpload").addEventListener("click", () => { if (type
 search.addEventListener("input", renderMods);
 renderChips();
 applyLanguage();
+
