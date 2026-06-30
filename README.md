@@ -19,3 +19,5 @@ window.AU_SUPABASE = {
 ```
 
 After that the site uses Supabase Auth for accounts, Storage for `.zip`/`.dll` mod files and screenshots, and the `mods` table for published catalog entries. Users can delete only their own uploaded mods.
+
+For the simplest upload flow, open Supabase Authentication -> Providers -> Email and turn off Confirm email. Otherwise new users must confirm their email before uploading.

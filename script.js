@@ -60,6 +60,7 @@
     "uploadNeedFile": "\u041f\u0440\u0438\u043a\u0440\u0435\u043f\u0438 .zip \u0438\u043b\u0438 .dll \u0444\u0430\u0439\u043b \u043c\u043e\u0434\u0430.",
     "uploadStored": "\u041c\u043e\u0434 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d \u0432 Supabase \u0438 \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d \u0432 \u043a\u0430\u0442\u0430\u043b\u043e\u0433.",
     "uploadPublishing": "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u044e \u0444\u0430\u0439\u043b\u044b \u0432 Supabase...",
+    "loginOpened": "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0432\u043e\u0439\u0434\u0438 \u0438\u043b\u0438 \u0441\u043e\u0437\u0434\u0430\u0439 \u0430\u043a\u043a\u0430\u0443\u043d\u0442, \u043f\u043e\u0442\u043e\u043c \u0441\u043d\u043e\u0432\u0430 \u043d\u0430\u0436\u043c\u0438 \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044e.",
     "supabaseMissing": "Supabase \u0435\u0449\u0451 \u043d\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0451\u043d: \u0432\u0441\u0442\u0430\u0432\u044c url \u0438 anonKey \u0432 supabase-config.js.",
     "loginRequired": "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0432\u043e\u0439\u0434\u0438 \u0432 \u0430\u043a\u043a\u0430\u0443\u043d\u0442 Supabase.",
     "uploadFailed": "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u043c\u043e\u0434",
@@ -143,6 +144,7 @@
     "uploadNeedFile": "Attach a .zip or .dll mod file.",
     "uploadStored": "Mod uploaded to Supabase and added to the catalog.",
     "uploadPublishing": "Uploading files to Supabase...",
+    "loginOpened": "Log in or create an account first, then press publish again.",
     "supabaseMissing": "Supabase is not connected yet: put url and anonKey into supabase-config.js.",
     "loginRequired": "Log in to your Supabase account first.",
     "uploadFailed": "Could not upload the mod",
@@ -259,6 +261,7 @@ let profileSettings = JSON.parse(localStorage.getItem("auModsProfile") || "{}");
 let supabaseClient = null;
 const supabaseConfig = window.AU_SUPABASE || {};
 const hasSupabase = Boolean(supabaseConfig.url && supabaseConfig.anonKey && window.supabase);
+let pendingUploadRecord = null;
 if (hasSupabase) supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey);
 
 function getAllMods() {
@@ -587,6 +590,21 @@ async function auth(mode) {
   await loadModsFromSupabase();
   accountDialog.close();
   applyLanguage();
+  if (pendingUploadRecord) {
+    uploadMessage.textContent = t("uploadPublishing");
+    try {
+      await publishModToSupabase(pendingUploadRecord);
+      pendingUploadRecord = null;
+      await loadModsFromSupabase();
+      uploadMessage.textContent = t("uploadStored");
+      clearUploadForm();
+      renderAccountPanel();
+      renderChips();
+      renderMods();
+    } catch (error) {
+      uploadMessage.textContent = `${t("uploadFailed")}: ${error.message || error}`;
+    }
+  }
 }
 
 function readAvatarFile(file) {
@@ -727,9 +745,9 @@ async function uploadFileToSupabase(bucket, userId, file, prefix = "") {
   return { path, url: getPublicStorageUrl(bucket, path) };
 }
 
-async function publishModToSupabase(record) {
+async function publishModToSupabase(record, userOverride = null) {
   if (!supabaseClient) throw new Error(t("supabaseMissing"));
-  const user = await getSupabaseUser();
+  const user = userOverride || await getSupabaseUser();
   if (!user) throw new Error(t("loginRequired"));
 
   const modFile = await uploadFileToSupabase("mod-files", user.id, record.fileBlob);
@@ -760,6 +778,34 @@ async function publishModToSupabase(record) {
   const { error } = await supabaseClient.from("mods").insert(payload);
   if (error) throw error;
 }
+function buildUploadRecord() {
+  const name = document.querySelector("#modNameInput").value.trim();
+  if (!name) { uploadMessage.textContent = t("draftNeedName"); return null; }
+  const fileInput = document.querySelector("#modFileInput");
+  const file = fileInput?.files?.[0];
+  if (!file || !isAllowedModFile(file)) { uploadMessage.textContent = t("uploadNeedFile"); return null; }
+  const description = document.querySelector("#modDescriptionInput").value.trim();
+  const screenshotFiles = Array.from(modScreenshotsInput?.files || []).filter((file) => file.type.startsWith("image/")).slice(0, 5);
+  return {
+    id: `upload-${Date.now()}`,
+    createdAt: Date.now(),
+    name,
+    category: document.querySelector("#modCategoryInput").value,
+    gameBuild: document.querySelector("#modBuildInput").value.trim() || "23954373",
+    description: description || name,
+    fileName: file.name,
+    fileBlob: file,
+    screenshots: screenshotFiles.map((file) => ({ name: file.name, blob: file }))
+  };
+}
+
+function openLoginForUpload(record) {
+  pendingUploadRecord = record;
+  uploadMessage.textContent = t("loginOpened");
+  accountMessage.textContent = "";
+  if (typeof accountDialog.showModal === "function" && !accountDialog.open) accountDialog.showModal();
+}
+
 function isAllowedModFile(file) {
   return /\.(zip|dll)$/i.test(file?.name || "");
 }
@@ -772,29 +818,15 @@ function clearUploadForm() {
   if (modScreenshotsInput) modScreenshotsInput.value = "";
 }
 async function saveDraft() {
-  const name = document.querySelector("#modNameInput").value.trim();
-  if (!name) { uploadMessage.textContent = t("draftNeedName"); return; }
-  const fileInput = document.querySelector("#modFileInput");
-  const file = fileInput?.files?.[0];
-  if (!file || !isAllowedModFile(file)) { uploadMessage.textContent = t("uploadNeedFile"); return; }
-  const description = document.querySelector("#modDescriptionInput").value.trim();
-  const screenshotFiles = Array.from(modScreenshotsInput?.files || []).filter((file) => file.type.startsWith("image/")).slice(0, 5);
-  const record = {
-    id: `upload-${Date.now()}`,
-    createdAt: Date.now(),
-    name,
-    category: document.querySelector("#modCategoryInput").value,
-    gameBuild: document.querySelector("#modBuildInput").value.trim() || "23954373",
-    description: description || name,
-    fileName: file.name,
-    fileBlob: file,
-    screenshots: screenshotFiles.map((file) => ({ name: file.name, blob: file }))
-  };
-
+  const record = buildUploadRecord();
+  if (!record) return;
   if (!supabaseClient) { uploadMessage.textContent = t("supabaseMissing"); return; }
+  const user = await getSupabaseUser();
+  if (!user) { openLoginForUpload(record); return; }
   uploadMessage.textContent = t("uploadPublishing");
   try {
-    await publishModToSupabase(record);
+    await publishModToSupabase(record, user);
+    pendingUploadRecord = null;
     await loadModsFromSupabase();
     uploadMessage.textContent = t("uploadStored");
     clearUploadForm();
