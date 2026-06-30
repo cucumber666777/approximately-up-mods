@@ -752,8 +752,7 @@ body.detail-page .topbar {
   gap: 0.45rem;
 }
 
-.button-row.compact .secondary-button,
-.profile-menu-item.small {
+.button-row.compact .secondary-button {
   min-height: 2.25rem;
   font-size: 0.88rem;
 }
@@ -762,3 +761,4 @@ body.detail-page .topbar {
   min-height: 1rem;
   font-size: 0.82rem;
 }
+

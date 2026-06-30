@@ -7,7 +7,6 @@
     "profileNameLabel": "\u041d\u0438\u043a\u043d\u0435\u0439\u043c",
     "profileAvatarLabel": "\u0410\u0432\u0430\u0442\u0430\u0440",
     "profileSave": "\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c",
-    "profileResetAvatar": "\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0430\u0432\u0430\u0442\u0430\u0440",
     "profileSaved": "\u041f\u0440\u043e\u0444\u0438\u043b\u044c \u043e\u0431\u043d\u043e\u0432\u043b\u0451\u043d.",
     "profileMenuAria": "\u041c\u0435\u043d\u044e \u043f\u0440\u043e\u0444\u0438\u043b\u044f",
     "accountStatusGuest": "\u0413\u043e\u0441\u0442\u0435\u0432\u043e\u0439 \u0440\u0435\u0436\u0438\u043c",
@@ -77,7 +76,6 @@
     "profileNameLabel": "Nickname",
     "profileAvatarLabel": "Avatar",
     "profileSave": "Save",
-    "profileResetAvatar": "Reset avatar",
     "profileSaved": "Profile updated.",
     "profileMenuAria": "Profile menu",
     "accountStatusGuest": "Guest mode",
@@ -348,7 +346,7 @@ function renderProfileMenu() {
     <div class="profile-settings">
       <label><span>${t("profileNameLabel")}</span><input id="profileNicknameInput" type="text" value="${escapeAttribute(profileSettings.nickname || "")}" placeholder="${escapeAttribute(name)}"></label>
       <label><span>${t("profileAvatarLabel")}</span><input id="profileAvatarInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
-      <div class="button-row compact"><button class="secondary-button" type="button" data-profile-action="save-profile">${t("profileSave")}</button><button class="profile-menu-item small" type="button" data-profile-action="reset-avatar">${t("profileResetAvatar")}</button></div>
+      <div class="button-row compact"><button class="secondary-button" type="button" data-profile-action="save-profile">${t("profileSave")}</button></div>
       <p class="notice profile-save-message" id="profileSaveMessage"></p>
     </div>
     <button class="profile-menu-item" type="button" data-profile-action="upload">${t("menuUploadMod")}</button>
@@ -565,12 +563,6 @@ async function updateProfileFromMenu() {
   if (message) message.textContent = t("profileSaved");
 }
 
-function resetProfileAvatar() {
-  delete profileSettings.avatar;
-  saveProfileSettings();
-  applyLanguage();
-  setProfileMenuOpen(true);
-}
 function saveDraft() {
   const name = document.querySelector("#modNameInput").value.trim();
   if (!name) { uploadMessage.textContent = t("draftNeedName"); return; }
@@ -638,10 +630,6 @@ profileMenu.addEventListener("click", async (event) => {
     await updateProfileFromMenu();
     return;
   }
-  if (action === "reset-avatar") {
-    resetProfileAvatar();
-    return;
-  }
   if (action === "upload") {
     uploadMessage.textContent = "";
     uploadDialog.showModal();
@@ -680,6 +668,7 @@ search.addEventListener("input", renderMods);
   renderChips();
   applyLanguage();
 })();
+
 
 
 
