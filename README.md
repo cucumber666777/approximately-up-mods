@@ -1,13 +1,21 @@
-﻿# Approximately Up Mods
+﻿# Approximately Up Mods site
 
-Static GitHub Pages site for an Approximately Up mods catalog.
+Static GitHub Pages catalog for Approximately Up mods.
 
-## Files
+## Supabase setup
 
-- `index.html` - page markup
-- `styles.css` - design
-- `script.js` - catalog data and RU/EN language switch
+1. Create a Supabase project.
+2. Open SQL Editor and run `supabase-schema.sql` from this repository.
+3. Open Project Settings -> API and copy:
+   - Project URL
+   - anon public key
+4. Paste them into `supabase-config.js`:
 
-## GitHub Pages
+```js
+window.AU_SUPABASE = {
+  url: "https://YOUR-PROJECT.supabase.co",
+  anonKey: "YOUR-ANON-PUBLIC-KEY"
+};
+```
 
-Publish from the `main` branch, root folder.
+After that the site uses Supabase Auth for accounts, Storage for `.zip`/`.dll` mod files and screenshots, and the `mods` table for published catalog entries. Users can delete only their own uploaded mods.

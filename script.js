@@ -17,9 +17,9 @@
     "menuDrafts": "\u041c\u043e\u0438 \u0447\u0435\u0440\u043d\u043e\u0432\u0438\u043a\u0438",
     "menuLanguage": "\u042f\u0437\u044b\u043a",
     "menuBackend": "\u0425\u0440\u0430\u043d\u0435\u043d\u0438\u0435",
-    "menuComingSoon": "\u041f\u043e\u0437\u0436\u0435 \u0437\u0434\u0435\u0441\u044c \u0431\u0443\u0434\u0443\u0442 \u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0438\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 Supabase.",
+    "menuComingSoon": "Supabase \u0445\u0440\u0430\u043d\u0438\u0442 \u0430\u043a\u043a\u0430\u0443\u043d\u0442\u044b, \u0444\u0430\u0439\u043b\u044b \u043c\u043e\u0434\u043e\u0432 \u0438 \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u043a\u0430\u0442\u0430\u043b\u043e\u0433\u0430.",
     "accountTitle": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442",
-    "accountHelp": "\u0421\u0435\u0439\u0447\u0430\u0441 \u0430\u043a\u043a\u0430\u0443\u043d\u0442 \u0441\u043e\u0445\u0440\u0430\u043d\u044f\u0435\u0442\u0441\u044f \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435. \u041f\u043e\u0437\u0436\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0438\u043c Supabase \u0438 \u0441\u0434\u0435\u043b\u0430\u0435\u043c \u0432\u0441\u0451 \u043f\u043e-\u043d\u0430\u0441\u0442\u043e\u044f\u0449\u0435\u043c\u0443.",
+    "accountHelp": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442\u044b \u0440\u0430\u0431\u043e\u0442\u0430\u044e\u0442 \u0447\u0435\u0440\u0435\u0437 Supabase Auth. \u0414\u043b\u044f \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0438 \u043c\u043e\u0434\u0430 \u043d\u0443\u0436\u043d\u043e \u0432\u043e\u0439\u0442\u0438.",
     "passwordLabel": "\u041f\u0430\u0440\u043e\u043b\u044c",
     "loginButton": "\u0412\u043e\u0439\u0442\u0438",
     "signupButton": "\u0421\u043e\u0437\u0434\u0430\u0442\u044c",
@@ -58,12 +58,16 @@
     "uploadRuleDescription": "\u041e\u043f\u0438\u0448\u0438 \u0444\u0443\u043d\u043a\u0446\u0438\u0438, \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0443 \u0438 \u0432\u0435\u0440\u0441\u0438\u044e \u0438\u0433\u0440\u044b.",
     "uploadRuleSafety": "\u041d\u0435 \u0432\u044b\u043a\u043b\u0430\u0434\u044b\u0432\u0430\u0439 \u0432\u0440\u0435\u0434\u043d\u044b\u0435 \u0444\u0430\u0439\u043b\u044b, \u0447\u0443\u0436\u0438\u0435 \u043c\u043e\u0434\u044b \u0431\u0435\u0437 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u044f \u0438 \u043e\u0431\u043c\u0430\u043d\u043d\u044b\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u044f.",
     "uploadNeedFile": "\u041f\u0440\u0438\u043a\u0440\u0435\u043f\u0438 .zip \u0438\u043b\u0438 .dll \u0444\u0430\u0439\u043b \u043c\u043e\u0434\u0430.",
-    "uploadStored": "\u041c\u043e\u0434 \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d \u0432 \u043a\u0430\u0442\u0430\u043b\u043e\u0433 \u043d\u0430 \u044d\u0442\u043e\u043c \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0435.",
+    "uploadStored": "\u041c\u043e\u0434 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d \u0432 Supabase \u0438 \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d \u0432 \u043a\u0430\u0442\u0430\u043b\u043e\u0433.",
+    "uploadPublishing": "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u044e \u0444\u0430\u0439\u043b\u044b \u0432 Supabase...",
+    "supabaseMissing": "Supabase \u0435\u0449\u0451 \u043d\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0451\u043d: \u0432\u0441\u0442\u0430\u0432\u044c url \u0438 anonKey \u0432 supabase-config.js.",
+    "loginRequired": "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0432\u043e\u0439\u0434\u0438 \u0432 \u0430\u043a\u043a\u0430\u0443\u043d\u0442 Supabase.",
+    "uploadFailed": "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u043c\u043e\u0434",
     "deleteMod": "\u0423\u0434\u0430\u043b\u0438\u0442\u044c",
     "deleteConfirm": "\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u044d\u0442\u043e\u0442 \u043c\u043e\u0434?",
     "fieldDescription": "\u041e\u043f\u0438\u0441\u0430\u043d\u0438\u0435",
     "fieldDescriptionPlaceholder": "\u0427\u0442\u043e \u0434\u0435\u043b\u0430\u0435\u0442 \u043c\u043e\u0434 \u0438 \u043a\u0430\u043a \u0435\u0433\u043e \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c",
-    "saveDraft": "\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0447\u0435\u0440\u043d\u043e\u0432\u0438\u043a",
+    "saveDraft": "\u041e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u0442\u044c \u043c\u043e\u0434",
     "download": "\u0421\u043a\u0430\u0447\u0430\u0442\u044c",
     "details": "\u041f\u043e\u0434\u0440\u043e\u0431\u043d\u0435\u0435",
     "screenshots": "\u0421\u043a\u0440\u0438\u043d\u0448\u043e\u0442\u044b",
@@ -96,9 +100,9 @@
     "menuDrafts": "My drafts",
     "menuLanguage": "Language",
     "menuBackend": "Storage",
-    "menuComingSoon": "Real Supabase settings will appear here later.",
+    "menuComingSoon": "Supabase stores accounts, mod files and catalog cards.",
     "accountTitle": "Account",
-    "accountHelp": "For now the account is saved in this browser. Later we will connect Supabase and make it real.",
+    "accountHelp": "Accounts use Supabase Auth. You need to log in before publishing a mod.",
     "passwordLabel": "Password",
     "loginButton": "Log in",
     "signupButton": "Create",
@@ -137,12 +141,16 @@
     "uploadRuleDescription": "Describe features, installation and the supported game version.",
     "uploadRuleSafety": "Do not upload harmful files, copied mods without permission, or misleading descriptions.",
     "uploadNeedFile": "Attach a .zip or .dll mod file.",
-    "uploadStored": "Mod added to the catalog on this device.",
+    "uploadStored": "Mod uploaded to Supabase and added to the catalog.",
+    "uploadPublishing": "Uploading files to Supabase...",
+    "supabaseMissing": "Supabase is not connected yet: put url and anonKey into supabase-config.js.",
+    "loginRequired": "Log in to your Supabase account first.",
+    "uploadFailed": "Could not upload the mod",
     "deleteMod": "Delete",
     "deleteConfirm": "Delete this mod?",
     "fieldDescription": "Description",
     "fieldDescriptionPlaceholder": "What the mod does and how to install it",
-    "saveDraft": "Save draft",
+    "saveDraft": "Publish mod",
     "download": "Download",
     "details": "Details",
     "screenshots": "Screenshots",
@@ -261,7 +269,7 @@ function getAllMods() {
     canDelete: true,
     owner: "draft"
   }));
-  return [...baseMods, ...serverMods, ...uploadedMods, ...localDrafts];
+  return [...baseMods, ...serverMods, ...localDrafts];
 }
 
 function getCategories() {
@@ -521,21 +529,28 @@ async function loadSession() {
 async function loadModsFromSupabase() {
   if (!supabaseClient) return;
   const { data, error } = await supabaseClient.from("mods").select("*").eq("published", true).order("created_at", { ascending: false });
-  if (!error && Array.isArray(data)) {
-    serverMods = data.map((row) => ({
+  if (error || !Array.isArray(data)) return;
+  serverMods = data.map((row) => {
+    const screenshots = Array.isArray(row.screenshots) ? row.screenshots : [];
+    return {
       id: row.id,
       name: row.name,
       category: row.category || "Tools",
-      version: row.version || "0.1.0",
+      version: row.version || "1.0.0",
       gameBuild: row.game_build || "unknown",
       loader: row.loader || "MelonLoader",
       status: row.status || "warn",
       summary: { ru: row.summary_ru || row.description || "", en: row.summary_en || row.description || "" },
-      file: row.file_url || "#"
-    }));
-  }
+      longDescription: { ru: row.description || "", en: row.description || "" },
+      screenshots,
+      file: row.file_url || "#",
+      filePath: row.file_path || "",
+      screenshotPaths: screenshots.map((shot) => shot.path).filter(Boolean),
+      canDelete: Boolean(sessionUser?.id && row.author_id === sessionUser.id),
+      owner: "supabase"
+    };
+  });
 }
-
 async function auth(mode) {
   const email = document.querySelector("#emailInput").value.trim().toLowerCase();
   const password = document.querySelector("#passwordInput").value;
@@ -566,8 +581,10 @@ async function auth(mode) {
     ? await supabaseClient.auth.signUp({ email, password })
     : await supabaseClient.auth.signInWithPassword({ email, password });
   if (result.error) { accountMessage.textContent = result.error.message; return; }
-  sessionUser = { email, id: result.data.user?.id, live: true };
-  localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
+  await loadSession();
+  if (!sessionUser && result.data.user) sessionUser = { email, id: result.data.user.id, live: true };
+  if (sessionUser) localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
+  await loadModsFromSupabase();
   accountDialog.close();
   applyLanguage();
 }
@@ -680,6 +697,69 @@ async function loadUploadedMods() {
   });
 }
 
+function sanitizeStorageName(name) {
+  return String(name || "file")
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "file";
+}
+
+function getPublicStorageUrl(bucket, path) {
+  const { data } = supabaseClient.storage.from(bucket).getPublicUrl(path);
+  return data?.publicUrl || "#";
+}
+
+async function getSupabaseUser() {
+  if (!supabaseClient) return null;
+  const { data, error } = await supabaseClient.auth.getUser();
+  if (error) return null;
+  return data.user || null;
+}
+
+async function uploadFileToSupabase(bucket, userId, file, prefix = "") {
+  const cleanName = sanitizeStorageName(file.name);
+  const path = `${userId}/${Date.now()}-${prefix}${cleanName}`;
+  const { error } = await supabaseClient.storage.from(bucket).upload(path, file, {
+    cacheControl: "3600",
+    upsert: false
+  });
+  if (error) throw error;
+  return { path, url: getPublicStorageUrl(bucket, path) };
+}
+
+async function publishModToSupabase(record) {
+  if (!supabaseClient) throw new Error(t("supabaseMissing"));
+  const user = await getSupabaseUser();
+  if (!user) throw new Error(t("loginRequired"));
+
+  const modFile = await uploadFileToSupabase("mod-files", user.id, record.fileBlob);
+  const screenshots = [];
+  for (let index = 0; index < record.screenshots.length; index += 1) {
+    const shot = record.screenshots[index];
+    const uploaded = await uploadFileToSupabase("mod-screenshots", user.id, shot.blob, `${index + 1}-`);
+    screenshots.push({ image: uploaded.url, path: uploaded.path, title: { ru: shot.name, en: shot.name } });
+  }
+
+  const payload = {
+    author_id: user.id,
+    name: record.name,
+    category: record.category,
+    version: "1.0.0",
+    game_build: record.gameBuild,
+    loader: "MelonLoader",
+    status: "warn",
+    summary_ru: record.description,
+    summary_en: record.description,
+    description: record.description,
+    file_url: modFile.url,
+    file_path: modFile.path,
+    screenshots,
+    published: true
+  };
+
+  const { error } = await supabaseClient.from("mods").insert(payload);
+  if (error) throw error;
+}
 function isAllowedModFile(file) {
   return /\.(zip|dll)$/i.test(file?.name || "");
 }
@@ -710,16 +790,21 @@ async function saveDraft() {
     fileBlob: file,
     screenshots: screenshotFiles.map((file) => ({ name: file.name, blob: file }))
   };
-  await saveUploadedModRecord(record);
-  await loadUploadedMods();
-  uploadMessage.textContent = t("uploadStored");
-  clearUploadForm();
-  renderAccountPanel();
-  renderChips();
-  renderMods();
+
+  if (!supabaseClient) { uploadMessage.textContent = t("supabaseMissing"); return; }
+  uploadMessage.textContent = t("uploadPublishing");
+  try {
+    await publishModToSupabase(record);
+    await loadModsFromSupabase();
+    uploadMessage.textContent = t("uploadStored");
+    clearUploadForm();
+    renderAccountPanel();
+    renderChips();
+    renderMods();
+  } catch (error) {
+    uploadMessage.textContent = `${t("uploadFailed")}: ${error.message || error}`;
+  }
 }
-
-
 function saveDraftList() {
   localStorage.setItem("auModsDrafts", JSON.stringify(draftMods));
 }
@@ -731,6 +816,17 @@ function deleteDraftMod(id) {
   applyLanguage();
 }
 
+async function deleteSupabaseMod(id) {
+  const mod = serverMods.find((item) => item.id === id && item.canDelete);
+  if (!mod || !supabaseClient) return;
+  const { error } = await supabaseClient.from("mods").delete().eq("id", id);
+  if (error) { alert(error.message); return; }
+  if (mod.filePath) await supabaseClient.storage.from("mod-files").remove([mod.filePath]);
+  if (mod.screenshotPaths?.length) await supabaseClient.storage.from("mod-screenshots").remove(mod.screenshotPaths);
+  await loadModsFromSupabase();
+  if (selectedModId === id) hideModDetail(false);
+  applyLanguage();
+}
 async function deleteUploadedMod(id) {
   await deleteUploadedModRecord(id);
   await loadUploadedMods();
@@ -744,7 +840,8 @@ async function deleteOwnMod(id) {
     await deleteUploadedMod(id);
     return;
   }
-  if (draftMods.some((mod) => mod.id === id)) deleteDraftMod(id);
+  if (draftMods.some((mod) => mod.id === id)) { deleteDraftMod(id); return; }
+  if (serverMods.some((mod) => mod.id === id && mod.canDelete)) await deleteSupabaseMod(id);
 }
 document.querySelectorAll(".lang-button").forEach((button) => {
   button.addEventListener("click", () => { currentLang = button.dataset.lang; localStorage.setItem("auModsLang", currentLang); applyLanguage(); });
@@ -776,6 +873,7 @@ profileMenu.addEventListener("click", async (event) => {
   }
   if (action === "logout") {
     if (supabaseClient && sessionUser?.live) await supabaseClient.auth.signOut();
+    serverMods = serverMods.map((mod) => ({ ...mod, canDelete: false }));
     sessionUser = null;
     localStorage.removeItem("auModsUser");
     applyLanguage();
