@@ -51,6 +51,16 @@
     "fieldCategory": "\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044f",
     "fieldGameVersion": "\u0412\u0435\u0440\u0441\u0438\u044f \u0438\u0433\u0440\u044b",
     "fieldFile": "\u0424\u0430\u0439\u043b \u043c\u043e\u0434\u0430",
+    "fieldScreenshots": "\u0421\u043a\u0440\u0438\u043d\u0448\u043e\u0442\u044b",
+    "uploadRulesTitle": "\u041c\u0438\u043d\u0438\u043c\u0430\u043b\u044c\u043d\u044b\u0435 \u043f\u0440\u0430\u0432\u0438\u043b\u0430",
+    "uploadRuleFile": "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u0439 .zip \u0438\u043b\u0438 .dll \u0444\u0430\u0439\u043b \u043c\u043e\u0434\u0430.",
+    "uploadRuleScreens": "\u0414\u043e\u0431\u0430\u0432\u044c 1-5 \u0441\u043a\u0440\u0438\u043d\u0448\u043e\u0442\u043e\u0432, \u0447\u0442\u043e\u0431\u044b \u0431\u044b\u043b\u043e \u043f\u043e\u043d\u044f\u0442\u043d\u043e, \u0447\u0442\u043e \u0434\u0435\u043b\u0430\u0435\u0442 \u043c\u043e\u0434.",
+    "uploadRuleDescription": "\u041e\u043f\u0438\u0448\u0438 \u0444\u0443\u043d\u043a\u0446\u0438\u0438, \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0443 \u0438 \u0432\u0435\u0440\u0441\u0438\u044e \u0438\u0433\u0440\u044b.",
+    "uploadRuleSafety": "\u041d\u0435 \u0432\u044b\u043a\u043b\u0430\u0434\u044b\u0432\u0430\u0439 \u0432\u0440\u0435\u0434\u043d\u044b\u0435 \u0444\u0430\u0439\u043b\u044b, \u0447\u0443\u0436\u0438\u0435 \u043c\u043e\u0434\u044b \u0431\u0435\u0437 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u044f \u0438 \u043e\u0431\u043c\u0430\u043d\u043d\u044b\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u044f.",
+    "uploadNeedFile": "\u041f\u0440\u0438\u043a\u0440\u0435\u043f\u0438 .zip \u0438\u043b\u0438 .dll \u0444\u0430\u0439\u043b \u043c\u043e\u0434\u0430.",
+    "uploadStored": "\u041c\u043e\u0434 \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d \u0432 \u043a\u0430\u0442\u0430\u043b\u043e\u0433 \u043d\u0430 \u044d\u0442\u043e\u043c \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0435.",
+    "deleteMod": "\u0423\u0434\u0430\u043b\u0438\u0442\u044c",
+    "deleteConfirm": "\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u044d\u0442\u043e\u0442 \u043c\u043e\u0434?",
     "fieldDescription": "\u041e\u043f\u0438\u0441\u0430\u043d\u0438\u0435",
     "fieldDescriptionPlaceholder": "\u0427\u0442\u043e \u0434\u0435\u043b\u0430\u0435\u0442 \u043c\u043e\u0434 \u0438 \u043a\u0430\u043a \u0435\u0433\u043e \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c",
     "saveDraft": "\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0447\u0435\u0440\u043d\u043e\u0432\u0438\u043a",
@@ -120,6 +130,16 @@
     "fieldCategory": "Category",
     "fieldGameVersion": "Game version",
     "fieldFile": "Mod file",
+    "fieldScreenshots": "Screenshots",
+    "uploadRulesTitle": "Minimum rules",
+    "uploadRuleFile": "Upload a .zip or .dll mod file.",
+    "uploadRuleScreens": "Add 1-5 screenshots so people can see what the mod does.",
+    "uploadRuleDescription": "Describe features, installation and the supported game version.",
+    "uploadRuleSafety": "Do not upload harmful files, copied mods without permission, or misleading descriptions.",
+    "uploadNeedFile": "Attach a .zip or .dll mod file.",
+    "uploadStored": "Mod added to the catalog on this device.",
+    "deleteMod": "Delete",
+    "deleteConfirm": "Delete this mod?",
     "fieldDescription": "Description",
     "fieldDescriptionPlaceholder": "What the mod does and how to install it",
     "saveDraft": "Save draft",
@@ -222,6 +242,8 @@ const baseMods = [
 ];
 
 let serverMods = [];
+let uploadedMods = [];
+let uploadObjectUrls = [];
 let draftMods = JSON.parse(localStorage.getItem("auModsDrafts") || "[]");
 let localUsers = JSON.parse(localStorage.getItem("auModsUsers") || "[]");
 let sessionUser = JSON.parse(localStorage.getItem("auModsUser") || "null");
@@ -232,7 +254,14 @@ const hasSupabase = Boolean(supabaseConfig.url && supabaseConfig.anonKey && wind
 if (hasSupabase) supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey);
 
 function getAllMods() {
-  return [...baseMods, ...serverMods, ...draftMods.map((mod) => ({ ...mod, status: mod.status || "warn", file: mod.file || "#" }))];
+  const localDrafts = draftMods.map((mod) => ({
+    ...mod,
+    status: mod.status || "warn",
+    file: mod.file || "#",
+    canDelete: true,
+    owner: "draft"
+  }));
+  return [...baseMods, ...serverMods, ...uploadedMods, ...localDrafts];
 }
 
 function getCategories() {
@@ -273,6 +302,8 @@ const profileAvatar = document.querySelector("#profileAvatar");
 const profileName = document.querySelector("#profileName");
 const profileMenu = document.querySelector("#profileMenu");
 const uploadMessage = document.querySelector("#uploadMessage");
+const modScreenshotsInput = document.querySelector("#modScreenshotsInput");
+const detailDelete = document.querySelector("#detailDelete");
 
 function t(key) {
   return i18n[currentLang][key] || i18n.en[key] || key;
@@ -289,7 +320,8 @@ function applyLanguage() {
   document.querySelectorAll("[data-i18n]").forEach((node) => { node.textContent = t(node.dataset.i18n); });
   document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => { node.placeholder = t(node.dataset.i18nPlaceholder); });
   document.querySelectorAll("[data-i18n-aria]").forEach((node) => { node.setAttribute("aria-label", t(node.dataset.i18nAria)); });
-  document.querySelectorAll(".lang-button").forEach((button) => { button.classList.toggle("active", button.dataset.lang === currentLang); });
+
+document.querySelectorAll(".lang-button").forEach((button) => { button.classList.toggle("active", button.dataset.lang === currentLang); });
   renderProfileButton();
   renderAccountPanel();
   renderProfileMenu();
@@ -369,14 +401,13 @@ function toggleProfileMenu() {
 }
 function renderAccountPanel() {
   if (!accountPanel) return;
-  const name = sessionUser?.email || t("guestName");
+  const name = getDisplayName();
   accountPanel.innerHTML = `
     <h4>${t("profileTitle")}</h4>
     <p>${sessionUser || profileSettings.nickname ? name : t("guestText")}</p>
     <div class="meta"><span class="tag">${t("draftsLabel")}: ${draftMods.length}</span><span class="tag">${hasSupabase ? "Supabase" : "Demo"}</span></div>
   `;
 }
-
 function renderChips() {
   chips.innerHTML = "";
   getCategories().forEach((category) => {
@@ -404,6 +435,7 @@ function renderMods() {
   }
   filtered.forEach((mod) => {
     const summary = mod.summary?.[currentLang] || mod.summary?.en || mod.description || "";
+    const deleteButton = mod.canDelete ? `<button class="download danger-button" type="button" data-delete-mod="${escapeAttribute(mod.id)}">${t("deleteMod")}</button>` : "";
     const card = document.createElement("article");
     card.className = "mod-card";
     card.tabIndex = 0;
@@ -414,14 +446,13 @@ function renderMods() {
       <p>${summary}</p>
       <div class="status"><i class="dot ${mod.status || "warn"}"></i>${statusLabel(mod.status)}</div>
       <div class="meta"><span class="tag">Build ${mod.gameBuild || "unknown"}</span><span class="tag">${mod.loader || "MelonLoader"}</span></div>
-      <div class="card-footer"><button class="download details-button" type="button">${t("details")}</button><a class="download" href="${mod.file || "#"}" ${mod.file && mod.file !== "#" ? "download" : ""}>${t("download")}</a></div>
+      <div class="card-footer"><button class="download details-button" type="button">${t("details")}</button><a class="download" href="${mod.file || "#"}" ${mod.file && mod.file !== "#" ? "download" : ""}>${t("download")}</a>${deleteButton}</div>
     `;
-    card.addEventListener("click", (event) => { if (event.target.closest("a")) return; showModDetail(mod.id); });
+    card.addEventListener("click", (event) => { if (event.target.closest("a") || event.target.closest("[data-delete-mod]")) return; showModDetail(mod.id); });
     card.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); showModDetail(mod.id); } });
     grid.appendChild(card);
   });
 }
-
 function setRandomDetailBackground() {
   let available = detailBackgrounds;
   if (detailBackgrounds.length > 1 && lastDetailBackground) {
@@ -450,6 +481,10 @@ function showModDetail(modId, shouldScroll = true, updateHistory = true) {
   detailDownload.href = mod.file || "#";
   detailDownload.textContent = t("download");
   if (mod.file && mod.file !== "#") detailDownload.setAttribute("download", ""); else detailDownload.removeAttribute("download");
+  if (detailDelete) {
+    detailDelete.hidden = !mod.canDelete;
+    detailDelete.textContent = t("deleteMod");
+  }
   detailInfo.innerHTML = `<div><strong>${t("gameBuildInfo")}</strong><span>${mod.gameBuild || "unknown"}</span></div><div><strong>${t("loaderInfo")}</strong><span>${mod.loader || "MelonLoader"}</span></div><div><strong>${t("statusInfo")}</strong><span>${statusLabel(mod.status)}</span></div>`;
   const screenshots = mod.screenshots || [];
   detailScreenshots.innerHTML = `<h3>${t("screenshots")}</h3>` + screenshots.map((shot, index) => {
@@ -563,28 +598,154 @@ async function updateProfileFromMenu() {
   if (message) message.textContent = t("profileSaved");
 }
 
-function saveDraft() {
+function openUploadDatabase() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("ApproximatelyUpModsUploads", 1);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains("mods")) db.createObjectStore("mods", { keyPath: "id" });
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveUploadedModRecord(record) {
+  const db = await openUploadDatabase();
+  await new Promise((resolve, reject) => {
+    const tx = db.transaction("mods", "readwrite");
+    tx.objectStore("mods").put(record);
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
+  db.close();
+}
+
+async function getUploadedModRecords() {
+  const db = await openUploadDatabase();
+  const records = await new Promise((resolve, reject) => {
+    const tx = db.transaction("mods", "readonly");
+    const request = tx.objectStore("mods").getAll();
+    request.onsuccess = () => resolve(request.result || []);
+    request.onerror = () => reject(request.error);
+  });
+  db.close();
+  return records;
+}
+
+
+async function deleteUploadedModRecord(id) {
+  const db = await openUploadDatabase();
+  await new Promise((resolve, reject) => {
+    const tx = db.transaction("mods", "readwrite");
+    tx.objectStore("mods").delete(id);
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
+  db.close();
+}
+function revokeUploadObjectUrls() {
+  uploadObjectUrls.forEach((url) => URL.revokeObjectURL(url));
+  uploadObjectUrls = [];
+}
+
+async function loadUploadedMods() {
+  revokeUploadObjectUrls();
+  const records = await getUploadedModRecords();
+  uploadedMods = records.sort((a, b) => b.createdAt - a.createdAt).map((record) => {
+    const fileUrl = URL.createObjectURL(record.fileBlob);
+    uploadObjectUrls.push(fileUrl);
+    const screenshots = (record.screenshots || []).map((shot, index) => {
+      const image = URL.createObjectURL(shot.blob);
+      uploadObjectUrls.push(image);
+      const title = shot.name || `Screenshot ${index + 1}`;
+      return { image, title: { ru: title, en: title } };
+    });
+    return {
+      id: record.id,
+      name: record.name,
+      category: record.category,
+      version: "pending",
+      gameBuild: record.gameBuild,
+      loader: "MelonLoader",
+      status: "warn",
+      summary: { ru: record.description, en: record.description },
+      longDescription: { ru: record.description, en: record.description },
+      screenshots,
+      file: fileUrl,
+      fileName: record.fileName,
+      canDelete: true,
+      owner: "local-upload"
+    };
+  });
+}
+
+function isAllowedModFile(file) {
+  return /\.(zip|dll)$/i.test(file?.name || "");
+}
+
+function clearUploadForm() {
+  document.querySelector("#modNameInput").value = "";
+  document.querySelector("#modBuildInput").value = "";
+  document.querySelector("#modDescriptionInput").value = "";
+  document.querySelector("#modFileInput").value = "";
+  if (modScreenshotsInput) modScreenshotsInput.value = "";
+}
+async function saveDraft() {
   const name = document.querySelector("#modNameInput").value.trim();
   if (!name) { uploadMessage.textContent = t("draftNeedName"); return; }
+  const fileInput = document.querySelector("#modFileInput");
+  const file = fileInput?.files?.[0];
+  if (!file || !isAllowedModFile(file)) { uploadMessage.textContent = t("uploadNeedFile"); return; }
   const description = document.querySelector("#modDescriptionInput").value.trim();
-  draftMods.unshift({
-    id: `draft-${Date.now()}`,
+  const screenshotFiles = Array.from(modScreenshotsInput?.files || []).filter((file) => file.type.startsWith("image/")).slice(0, 5);
+  const record = {
+    id: `upload-${Date.now()}`,
+    createdAt: Date.now(),
     name,
     category: document.querySelector("#modCategoryInput").value,
-    version: "draft",
     gameBuild: document.querySelector("#modBuildInput").value.trim() || "23954373",
-    loader: "MelonLoader",
-    summary: { ru: description, en: description },
-    description,
-    screenshots: []
-  });
-  localStorage.setItem("auModsDrafts", JSON.stringify(draftMods));
-  uploadMessage.textContent = t("draftSaved");
+    description: description || name,
+    fileName: file.name,
+    fileBlob: file,
+    screenshots: screenshotFiles.map((file) => ({ name: file.name, blob: file }))
+  };
+  await saveUploadedModRecord(record);
+  await loadUploadedMods();
+  uploadMessage.textContent = t("uploadStored");
+  clearUploadForm();
   renderAccountPanel();
   renderChips();
   renderMods();
 }
 
+
+function saveDraftList() {
+  localStorage.setItem("auModsDrafts", JSON.stringify(draftMods));
+}
+
+function deleteDraftMod(id) {
+  draftMods = draftMods.filter((mod) => mod.id !== id);
+  saveDraftList();
+  if (selectedModId === id) hideModDetail(false);
+  applyLanguage();
+}
+
+async function deleteUploadedMod(id) {
+  await deleteUploadedModRecord(id);
+  await loadUploadedMods();
+  if (selectedModId === id) hideModDetail(false);
+  applyLanguage();
+}
+
+async function deleteOwnMod(id) {
+  if (!id || !confirm(t("deleteConfirm"))) return;
+  if (uploadedMods.some((mod) => mod.id === id)) {
+    await deleteUploadedMod(id);
+    return;
+  }
+  if (draftMods.some((mod) => mod.id === id)) deleteDraftMod(id);
+}
 document.querySelectorAll(".lang-button").forEach((button) => {
   button.addEventListener("click", () => { currentLang = button.dataset.lang; localStorage.setItem("auModsLang", currentLang); applyLanguage(); });
 });
@@ -598,13 +759,7 @@ window.addEventListener("popstate", (event) => {
     hideModDetail(false);
   }
 });
-if (location.hash) {
-  const modId = location.hash.slice(1);
-  if (getAllMods().some((mod) => mod.id === modId)) {
-    history.replaceState({ modId }, "", location.href);
-    showModDetail(modId, false, false);
-  }
-}
+
 document.querySelector("#openUpload").addEventListener("click", () => { if (typeof uploadDialog.showModal === "function") { uploadMessage.textContent = ""; uploadDialog.showModal(); } });
 accountButton.addEventListener("click", (event) => {
   event.stopPropagation();
@@ -661,6 +816,15 @@ document.querySelector("#loginButton").addEventListener("click", () => auth("log
 document.querySelector("#signupButton").addEventListener("click", () => auth("signup"));
 document.querySelector("#saveDraftButton").addEventListener("click", saveDraft);
 search.addEventListener("input", renderMods);
+grid.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-delete-mod]");
+  if (!button) return;
+  event.stopPropagation();
+  await deleteOwnMod(button.dataset.deleteMod);
+});
+if (detailDelete) {
+  detailDelete.addEventListener("click", async () => deleteOwnMod(selectedModId));
+}
 
 
 function updateParallaxBackground() {
@@ -673,16 +837,15 @@ window.addEventListener("resize", updateParallaxBackground);
 (async function init() {
   await loadSession();
   await loadModsFromSupabase();
+  await loadUploadedMods();
   renderChips();
   applyLanguage();
+  if (location.hash) {
+    const modId = location.hash.slice(1);
+    if (getAllMods().some((mod) => mod.id === modId)) {
+      history.replaceState({ modId }, "", location.href);
+      showModDetail(modId, false, false);
+    }
+  }
+  updateParallaxBackground();
 })();
-
-
-
-
-
-
-
-
-
-

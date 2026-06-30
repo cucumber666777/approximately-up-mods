@@ -779,3 +779,44 @@ body.detail-page .topbar {
     transform: none;
   }
 }
+
+.upload-rules {
+  padding: 0.85rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+  background: rgba(12, 17, 24, 0.72);
+}
+
+.upload-rules h3 {
+  margin-bottom: 0.45rem;
+  font-size: 1rem;
+}
+
+.upload-rules ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.card-footer {
+  flex-wrap: wrap;
+}
+
+.danger-button {
+  border-color: rgba(255, 107, 107, 0.48);
+  background: rgba(255, 107, 107, 0.08);
+  color: var(--red);
+}
+
+.danger-button:hover,
+.danger-button:focus-visible {
+  border-color: var(--red);
+  outline: none;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}

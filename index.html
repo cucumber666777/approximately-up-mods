@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Approximately Up Mods</title>
-  <link rel="stylesheet" href="styles.css?v=20260630-parallax-bg">
+  <link rel="stylesheet" href="styles.css?v=20260630-upload-delete">
 </head>
 <body>
   <header class="topbar">
@@ -59,6 +59,7 @@
           <p id="detailSummary"></p>
           <div class="detail-actions">
             <a class="primary-button detail-download" id="detailDownload" download></a>
+            <button class="secondary-button danger-button" id="detailDelete" type="button" hidden></button>
           </div>
         </div>
         <aside class="detail-info" id="detailInfo"></aside>
@@ -108,8 +109,21 @@
       </label>
       <label>
         <span data-i18n="fieldFile"></span>
-        <input id="modFileInput" type="file" accept=".zip,.dll">
+        <input id="modFileInput" type="file" accept=".zip,.dll" required>
       </label>
+      <label>
+        <span data-i18n="fieldScreenshots"></span>
+        <input id="modScreenshotsInput" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+      </label>
+      <section class="upload-rules">
+        <h3 data-i18n="uploadRulesTitle"></h3>
+        <ul>
+          <li data-i18n="uploadRuleFile"></li>
+          <li data-i18n="uploadRuleScreens"></li>
+          <li data-i18n="uploadRuleDescription"></li>
+          <li data-i18n="uploadRuleSafety"></li>
+        </ul>
+      </section>
       <label>
         <span data-i18n="fieldDescription"></span>
         <textarea id="modDescriptionInput" rows="4" data-i18n-placeholder="fieldDescriptionPlaceholder"></textarea>
@@ -144,18 +158,6 @@
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js?v=20260630-one-catalog"></script>
-  <script src="script.js?v=20260630-parallax-bg"></script>
+  <script src="script.js?v=20260630-upload-delete"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
