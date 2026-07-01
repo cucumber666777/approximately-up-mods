@@ -144,7 +144,7 @@
     "guideRule2": "Include a short description, supported game build, loader version and screenshots.",
     "guideRule3": "No harmful files, fake downloads, stolen work or misleading descriptions.",
     "guideRule4": "Every submitted mod is hidden until the site owner reviews it manually.",
-    "heroTitle": "Mods, tools and planets for Approximately Up",
+    "heroTitle": "Mods, tools and Everything for Approximately Up",
     "heroText": "A first working catalog prototype: search, categories, game builds and download cards already work directly in the browser.",
     "modsCountLabel": "mods",
     "currentBuildLabel": "current build",
