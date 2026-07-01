@@ -3,6 +3,8 @@ const hasSupabase = Boolean(supabaseConfig.url && supabaseConfig.anonKey && wind
 const supabaseClient = hasSupabase ? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey) : null;
 let sessionUser = null;
 let screenshotUrls = [];
+const DEFAULT_AVATAR = "assets/default-avatar.png";
+let profileSettings = JSON.parse(localStorage.getItem("auModsProfile") || "{}");
 const REVIEW_EMAIL = "cucumber993993@gmail.com";
 
 const refs = {
@@ -71,9 +73,30 @@ function getPublicStorageUrl(bucket, path) {
 
 async function getSupabaseUser() {
   if (!supabaseClient) return null;
+  const { data: sessionData } = await supabaseClient.auth.getSession();
+  if (sessionData.session?.user) return sessionData.session.user;
   const { data, error } = await supabaseClient.auth.getUser();
   if (error) return null;
   return data.user || null;
+}
+
+function getProfileDisplayName(user) {
+  const storedUser = JSON.parse(localStorage.getItem("auModsUser") || "null");
+  return profileSettings.nickname || storedUser?.nickname || user?.user_metadata?.name || user?.email?.split("@")[0] || "Guest";
+}
+
+function getProfileAvatar() {
+  return profileSettings.avatar || DEFAULT_AVATAR;
+}
+
+function rememberSessionUser(user) {
+  if (!user) {
+    sessionUser = null;
+    localStorage.removeItem("auModsUser");
+    return;
+  }
+  sessionUser = { id: user.id, email: user.email, live: true };
+  localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
 }
 
 async function uploadFileToSupabase(bucket, userId, file, prefix = "") {
@@ -179,18 +202,27 @@ async function publish(record) {
 }
 
 async function refreshAccount() {
-  sessionUser = await getSupabaseUser();
-  const name = sessionUser?.email?.split("@")[0] || "Guest";
+  profileSettings = JSON.parse(localStorage.getItem("auModsProfile") || "{}");
+  const user = await getSupabaseUser();
+  rememberSessionUser(user);
+  const name = getProfileDisplayName(user);
+  const avatar = getProfileAvatar();
   refs.profileName.textContent = name;
+  refs.profileAvatar.src = avatar;
   refs.profileAvatar.alt = name;
-  refs.statusTitle.textContent = sessionUser ? "Ready to submit" : "Account required";
-  refs.statusText.textContent = hasSupabase ? (sessionUser ? sessionUser.email : "Log in before submitting") : "Supabase is not connected";
-  refs.authBox.hidden = Boolean(sessionUser);
-  refs.profileMenu.innerHTML = sessionUser
-    ? `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="${name}"><div><strong>${name}</strong><small>Supabase</small></div></div><button class="profile-menu-item danger" type="button" id="logoutButton">Log out</button>`
-    : `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="Guest"><div><strong>Guest</strong><small>Not logged in</small></div></div><p>Log in on this page to submit a mod for review.</p>`;
+  refs.statusTitle.textContent = user ? "Ready to submit" : "Account required";
+  refs.statusText.textContent = hasSupabase ? (user ? `${name} (${user.email})` : "Use the same account as the catalog or log in here") : "Supabase is not connected";
+  refs.authBox.hidden = Boolean(user);
+  refs.profileMenu.innerHTML = user
+    ? `<div class="profile-menu-head"><img class="avatar avatar-image large" src="${escapeHtml(avatar)}" alt="${escapeHtml(name)}"><div><strong>${escapeHtml(name)}</strong><small>${escapeHtml(user.email || "Supabase")}</small></div></div><a class="profile-menu-item" href="index.html">Open catalog account</a><button class="profile-menu-item danger" type="button" id="logoutButton">Log out</button>`
+    : `<div class="profile-menu-head"><img class="avatar avatar-image large" src="${DEFAULT_AVATAR}" alt="Guest"><div><strong>Guest</strong><small>Not logged in</small></div></div><a class="profile-menu-item" href="index.html">Log in on catalog</a><p>Or log in here to submit a mod for review.</p>`;
   const logout = document.querySelector("#logoutButton");
-  if (logout) logout.addEventListener("click", async () => { await supabaseClient.auth.signOut(); refs.profileMenu.hidden = true; await refreshAccount(); });
+  if (logout) logout.addEventListener("click", async () => {
+    if (supabaseClient) await supabaseClient.auth.signOut();
+    rememberSessionUser(null);
+    refs.profileMenu.hidden = true;
+    await refreshAccount();
+  });
 }
 
 function refreshScreenshotTitleFields(files) {
@@ -240,6 +272,7 @@ async function auth(mode) {
     ? await supabaseClient.auth.signUp({ email, password })
     : await supabaseClient.auth.signInWithPassword({ email, password });
   if (result.error) { refs.accountMessage.textContent = result.error.message; return; }
+  if (result.data?.user) rememberSessionUser(result.data.user);
   refs.accountMessage.textContent = mode === "signup" ? "Account created." : "Logged in.";
   await refreshAccount();
 }
@@ -290,7 +323,12 @@ refs.form.addEventListener("submit", async (event) => {
   }
 });
 
+if (supabaseClient) {
+  supabaseClient.auth.onAuthStateChange(() => refreshAccount());
+}
 refreshAccount();
 updateFileLabels();
 refreshScreenshotTitleFields([]);
 updatePreview();
+
+
