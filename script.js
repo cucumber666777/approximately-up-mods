@@ -889,7 +889,11 @@ window.addEventListener("popstate", (event) => {
   }
 });
 
-document.querySelector("#openUpload").addEventListener("click", () => { if (typeof uploadDialog.showModal === "function") { uploadMessage.textContent = ""; uploadDialog.showModal(); } });
+document.querySelector("#openUpload")?.addEventListener("click", (event) => {
+  const target = event.currentTarget?.getAttribute("href");
+  if (target) return;
+  if (typeof uploadDialog.showModal === "function") { uploadMessage.textContent = ""; uploadDialog.showModal(); }
+});
 accountButton.addEventListener("click", (event) => {
   event.stopPropagation();
   toggleProfileMenu();
@@ -916,8 +920,7 @@ profileMenu.addEventListener("click", async (event) => {
     return;
   }
   if (action === "upload") {
-    uploadMessage.textContent = "";
-    uploadDialog.showModal();
+    window.location.href = "upload.html";
     return;
   }
   if (action === "drafts") {

@@ -1,0 +1,119 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Загрузка мода - Approximately Up Mods</title>
+  <link rel="stylesheet" href="styles.css?v=20260630-upload-page">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Community mod hub</p>
+      <h1>Approximately Up Mods</h1>
+    </div>
+    <div class="top-actions">
+      <a class="secondary-button nav-link" href="index.html">Каталог</a>
+      <div class="profile-menu-wrap">
+        <button class="profile-button" id="accountButton" type="button" aria-expanded="false" aria-controls="profileMenu">
+          <img class="avatar avatar-image" id="profileAvatar" src="assets/default-avatar.png" alt="">
+          <span class="profile-name" id="profileName">Гость</span>
+        </button>
+        <div class="profile-menu" id="profileMenu" hidden></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="upload-page">
+    <section class="upload-hero compact-hero">
+      <div>
+        <p class="eyebrow">Публикация</p>
+        <h2>Загрузить мод</h2>
+        <p class="muted">Заполни поля, проверь живой предпросмотр и опубликуй. Файл мода и скриншоты загрузятся в Supabase.</p>
+      </div>
+      <div class="upload-status-panel">
+        <strong id="uploadStatusTitle">Аккаунт</strong>
+        <span id="uploadStatusText">Проверяю...</span>
+      </div>
+    </section>
+
+    <section class="upload-workbench">
+      <form class="upload-builder" id="uploadForm">
+        <section class="builder-section">
+          <h3>Аккаунт</h3>
+          <div class="auth-inline" id="authBox">
+            <label><span>Email</span><input id="emailInput" type="email" autocomplete="email"></label>
+            <label><span>Пароль</span><input id="passwordInput" type="password" autocomplete="current-password"></label>
+            <div class="button-row">
+              <button class="secondary-button" id="loginButton" type="button">Войти</button>
+              <button class="secondary-button" id="signupButton" type="button">Создать</button>
+            </div>
+            <p class="notice" id="accountMessage"></p>
+          </div>
+        </section>
+
+        <section class="builder-section">
+          <h3>Файлы</h3>
+          <label><span>Файл мода</span><input id="modFileInput" type="file" accept=".zip,.dll" required></label>
+          <label><span>Скриншоты</span><input id="modScreenshotsInput" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
+        </section>
+
+        <section class="builder-section two-column-fields">
+          <label><span>Название</span><input id="modNameInput" type="text" placeholder="Planet Runtime Editor"></label>
+          <label><span>Категория</span><select id="modCategoryInput"><option>Tools</option><option>Planets</option><option>Gameplay</option><option>Map</option><option>Cosmetic</option></select></label>
+          <label><span>Версия</span><input id="modVersionInput" type="text" placeholder="1.0.0"></label>
+          <label><span>Билд игры</span><input id="modBuildInput" type="text" placeholder="23954373"></label>
+          <label><span>Лоадер</span><input id="modLoaderInput" type="text" placeholder="MelonLoader 0.7.x"></label>
+          <label><span>Статус</span><select id="modStatusInput"><option value="warn">Проверить</option><option value="ok">Работает</option><option value="bad">Сломан</option></select></label>
+        </section>
+
+        <section class="builder-section">
+          <h3>Текст страницы</h3>
+          <label><span>Короткое описание</span><textarea id="modSummaryInput" rows="3" placeholder="Одна короткая строка для карточки в каталоге."></textarea></label>
+          <label><span>Полное описание</span><textarea id="modDescriptionInput" rows="7" placeholder="Функции, установка, управление и совместимость."></textarea></label>
+        </section>
+
+        <section class="builder-section two-column-fields">
+          <label><span>Цвет акцента</span><input id="modAccentInput" type="color" value="#48a8ff"></label>
+          <label><span>Фон предпросмотра</span><select id="modPreviewBgInput"><option value="auto">Случайный игровой фон</option><option value="dark">Тёмный фон</option><option value="blue">Синий космос</option><option value="green">Зелёная планета</option></select></label>
+        </section>
+
+        <section class="upload-rules">
+          <h3>Минимальные правила</h3>
+          <ul>
+            <li>Загружай только файлы модов `.zip` или `.dll`.</li>
+            <li>Добавляй скриншоты, если мод меняет геймплей или внешний вид.</li>
+            <li>Не загружай вредные файлы и чужую работу без разрешения.</li>
+          </ul>
+        </section>
+
+        <button class="primary-button publish-button" id="publishButton" type="submit">Опубликовать мод</button>
+        <p class="notice" id="uploadMessage"></p>
+      </form>
+
+      <aside class="upload-preview-shell">
+        <div class="preview-toolbar">
+          <strong>Живой предпросмотр</strong>
+          <span>Страница мода</span>
+        </div>
+        <section class="mod-detail preview-detail" id="previewDetail">
+          <div class="detail-layout">
+            <div class="detail-main" id="previewMain">
+              <div class="detail-meta" id="previewMeta"></div>
+              <h2 id="previewTitle"></h2>
+              <p id="previewSummary"></p>
+              <div class="detail-actions"><a class="primary-button detail-download" id="previewDownload">Скачать</a></div>
+            </div>
+            <aside class="detail-info" id="previewInfo"></aside>
+          </div>
+          <div class="screenshots" id="previewScreenshots"></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js?v=20260630-login-upload-fix"></script>
+  <script src="upload.js?v=20260630-upload-page"></script>
+</body>
+</html>
