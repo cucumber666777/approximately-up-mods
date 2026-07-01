@@ -260,13 +260,15 @@ refs.previewScreenshots?.addEventListener("input", (event) => {
 refs.form.addEventListener("submit", async (event) => {
   event.preventDefault();
   refs.uploadMessage.textContent = "";
+  refs.uploadMessage.className = "notice";
   refs.publish.disabled = true;
   try {
     const record = buildRecord();
     refs.uploadMessage.textContent = "Uploading to Supabase for manual review...";
     const result = await publish(record);
     const reviewEmailUrl = buildReviewEmailUrl(record, result);
-    refs.uploadMessage.innerHTML = `Submitted for review. The mod is hidden until approved. <a href="${escapeHtml(reviewEmailUrl)}" target="_blank" rel="noopener">Open Gmail review email again</a>.`;
+    refs.uploadMessage.className = "notice pending-review";
+    refs.uploadMessage.innerHTML = `<strong>Pending review.</strong> Your mod was uploaded, but it is hidden from the catalog until the owner approves it. A Gmail review message has been prepared for cucumber993993@gmail.com. <a href="${escapeHtml(reviewEmailUrl)}" target="_blank" rel="noopener">Open Gmail review email again</a>.`;
     window.location.href = reviewEmailUrl;
     refs.form.reset();
     refreshScreenshotUrls();
