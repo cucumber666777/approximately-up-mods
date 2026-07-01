@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Загрузка мода - Approximately Up Mods</title>
-  <link rel="stylesheet" href="styles.css?v=20260630-upload-page">
+  <link rel="stylesheet" href="styles.css?v=20260701-screenshot-titles">
 </head>
 <body>
   <header class="topbar">
@@ -56,6 +56,7 @@
           <h3>Файлы</h3>
           <label><span>Файл мода</span><input id="modFileInput" type="file" accept=".zip,.dll" required></label>
           <label><span>Скриншоты</span><input id="modScreenshotsInput" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
+          <div class="screenshot-title-list" id="screenshotTitleList" aria-live="polite"></div>
         </section>
 
         <section class="builder-section two-column-fields">
@@ -114,6 +115,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js?v=20260630-login-upload-fix"></script>
-  <script src="upload.js?v=20260630-upload-page"></script>
+  <script src="upload.js?v=20260701-screenshot-titles"></script>
 </body>
 </html>

@@ -20,6 +20,7 @@ const refs = {
   form: document.querySelector("#uploadForm"),
   file: document.querySelector("#modFileInput"),
   screenshots: document.querySelector("#modScreenshotsInput"),
+  screenshotTitles: document.querySelector("#screenshotTitleList"),
   name: document.querySelector("#modNameInput"),
   category: document.querySelector("#modCategoryInput"),
   version: document.querySelector("#modVersionInput"),
@@ -44,6 +45,10 @@ const refs = {
 function text(value, fallback) {
   const clean = String(value || "").trim();
   return clean || fallback;
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 }
 
 function statusLabel(value) {
@@ -75,6 +80,15 @@ async function uploadFileToSupabase(bucket, userId, file, prefix = "") {
   return { path, url: getPublicStorageUrl(bucket, path) };
 }
 
+function getScreenshotTitle(index, fallback) {
+  const input = refs.screenshotTitles?.querySelector(`[data-screenshot-title="${index}"]`);
+  return text(input?.value, fallback);
+}
+
+function selectedScreenshotFiles() {
+  return Array.from(refs.screenshots.files || []).filter((file) => file.type.startsWith("image/")).slice(0, 5);
+}
+
 function buildRecord() {
   const file = refs.file.files?.[0];
   if (!text(refs.name.value, "")) throw new Error("Введи название мода.");
@@ -90,7 +104,7 @@ function buildRecord() {
     summary,
     description: text(refs.description.value, summary),
     fileBlob: file,
-    screenshots: Array.from(refs.screenshots.files || []).filter((file) => file.type.startsWith("image/")).slice(0, 5).map((file) => ({ name: file.name, blob: file }))
+    screenshots: selectedScreenshotFiles().map((file, index) => ({ name: getScreenshotTitle(index, file.name), blob: file }))
   };
 }
 
@@ -156,13 +170,16 @@ function updatePreview() {
   refs.previewMain.style.setProperty("--preview-accent", refs.accent.value);
   refs.previewMain.style.borderColor = refs.accent.value;
   refs.previewMain.className = `detail-main preview-bg-${refs.previewBg.value}`;
-  refs.previewMeta.innerHTML = `<span class="tag">${category}</span><span class="tag">v${version}</span>`;
+  refs.previewMeta.innerHTML = `<span class="tag">${escapeHtml(category)}</span><span class="tag">v${escapeHtml(version)}</span>`;
   refs.previewTitle.textContent = name;
   refs.previewSummary.textContent = summary;
   refs.previewDownload.textContent = "Скачать";
   refs.previewDownload.style.background = refs.accent.value;
-  refs.previewInfo.innerHTML = `<div><strong>Билд игры</strong><span>${build}</span></div><div><strong>Лоадер</strong><span>${loader}</span></div><div><strong>Статус</strong><span>${statusLabel(status)}</span></div>`;
-  refs.previewScreenshots.innerHTML = `<h3>Скриншоты</h3>` + (screenshotUrls.length ? screenshotUrls.map((url, index) => `<div class="screenshot-card"><img class="screenshot-image" src="${url}" alt="Скриншот ${index + 1}"><span>Скриншот ${index + 1}</span></div>`).join("") : [1, 2, 3].map((item) => `<div class="screenshot-card"><div class="screenshot-art">${item}</div><span>Место для скриншота ${item}</span></div>`).join(""));
+  refs.previewInfo.innerHTML = `<div><strong>Билд игры</strong><span>${escapeHtml(build)}</span></div><div><strong>Лоадер</strong><span>${escapeHtml(loader)}</span></div><div><strong>Статус</strong><span>${statusLabel(status)}</span></div>`;
+  refs.previewScreenshots.innerHTML = `<h3>Скриншоты</h3>` + (screenshotUrls.length ? screenshotUrls.map((url, index) => {
+    const title = escapeHtml(getScreenshotTitle(index, `Скриншот ${index + 1}`));
+    return `<div class="screenshot-card"><img class="screenshot-image" src="${url}" alt="${title}"><span>${title}</span></div>`;
+  }).join("") : [1, 2, 3].map((item) => `<div class="screenshot-card"><div class="screenshot-art">${item}</div><span>Место для скриншота ${item}</span></div>`).join(""));
 }
 
 async function auth(mode) {
@@ -188,6 +205,7 @@ document.addEventListener("click", (event) => {
 refs.login.addEventListener("click", () => auth("login"));
 refs.signup.addEventListener("click", () => auth("signup"));
 refs.screenshots.addEventListener("change", () => { refreshScreenshotUrls(); updatePreview(); });
+refs.screenshotTitles?.addEventListener("input", updatePreview);
 [refs.name, refs.category, refs.version, refs.build, refs.loader, refs.status, refs.summary, refs.description, refs.accent, refs.previewBg].forEach((node) => {
   node.addEventListener("input", updatePreview);
   node.addEventListener("change", updatePreview);
