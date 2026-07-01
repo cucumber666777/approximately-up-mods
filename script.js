@@ -11,15 +11,15 @@
     "profileMenuAria": "\u041c\u0435\u043d\u044e \u043f\u0440\u043e\u0444\u0438\u043b\u044f",
     "accountStatusGuest": "\u0413\u043e\u0441\u0442\u0435\u0432\u043e\u0439 \u0440\u0435\u0436\u0438\u043c",
     "accountStatusLocal": "\u0414\u0435\u043c\u043e-\u0430\u043a\u043a\u0430\u0443\u043d\u0442",
-    "accountStatusLive": "Supabase",
+    "accountStatusLive": "Online",
     "openAccountSettings": "\u0412\u0445\u043e\u0434 \u0438 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044f",
     "menuUploadMod": "\u0412\u044b\u043b\u043e\u0436\u0438\u0442\u044c \u043c\u043e\u0434",
     "menuDrafts": "\u041c\u043e\u0438 \u0447\u0435\u0440\u043d\u043e\u0432\u0438\u043a\u0438",
     "menuLanguage": "\u042f\u0437\u044b\u043a",
     "menuBackend": "\u0425\u0440\u0430\u043d\u0435\u043d\u0438\u0435",
-    "menuComingSoon": "Supabase \u0445\u0440\u0430\u043d\u0438\u0442 \u0430\u043a\u043a\u0430\u0443\u043d\u0442\u044b, \u0444\u0430\u0439\u043b\u044b \u043c\u043e\u0434\u043e\u0432 \u0438 \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u043a\u0430\u0442\u0430\u043b\u043e\u0433\u0430.",
+    "menuComingSoon": "В этой статической версии профиль хранится только в браузере.",
     "accountTitle": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442",
-    "accountHelp": "\u0410\u043a\u043a\u0430\u0443\u043d\u0442\u044b \u0440\u0430\u0431\u043e\u0442\u0430\u044e\u0442 \u0447\u0435\u0440\u0435\u0437 Supabase Auth. \u0414\u043b\u044f \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0438 \u043c\u043e\u0434\u0430 \u043d\u0443\u0436\u043d\u043e \u0432\u043e\u0439\u0442\u0438.",
+    "accountHelp": "В этой статической версии используется локальный профиль браузера. Реальная загрузка отключена.",
     "passwordLabel": "\u041f\u0430\u0440\u043e\u043b\u044c",
     "loginButton": "\u0412\u043e\u0439\u0442\u0438",
     "signupButton": "\u0421\u043e\u0437\u0434\u0430\u0442\u044c",
@@ -71,11 +71,11 @@
     "uploadRuleDescription": "\u041e\u043f\u0438\u0448\u0438 \u0444\u0443\u043d\u043a\u0446\u0438\u0438, \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0443 \u0438 \u0432\u0435\u0440\u0441\u0438\u044e \u0438\u0433\u0440\u044b.",
     "uploadRuleSafety": "\u041d\u0435 \u0432\u044b\u043a\u043b\u0430\u0434\u044b\u0432\u0430\u0439 \u0432\u0440\u0435\u0434\u043d\u044b\u0435 \u0444\u0430\u0439\u043b\u044b, \u0447\u0443\u0436\u0438\u0435 \u043c\u043e\u0434\u044b \u0431\u0435\u0437 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u044f \u0438 \u043e\u0431\u043c\u0430\u043d\u043d\u044b\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u044f.",
     "uploadNeedFile": "\u041f\u0440\u0438\u043a\u0440\u0435\u043f\u0438 .zip \u0438\u043b\u0438 .dll \u0444\u0430\u0439\u043b \u043c\u043e\u0434\u0430.",
-    "uploadStored": "\u041c\u043e\u0434 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d \u0432 Supabase \u0438 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d \u043d\u0430 \u0440\u0443\u0447\u043d\u0443\u044e \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0443.",
-    "uploadPublishing": "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u044e \u0444\u0430\u0439\u043b\u044b \u0432 Supabase...",
+    "uploadStored": "Загрузка на сервер отключена в этой статической версии.",
+    "uploadPublishing": "Готовлю локальный предпросмотр...",
     "loginOpened": "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0432\u043e\u0439\u0434\u0438 \u0438\u043b\u0438 \u0441\u043e\u0437\u0434\u0430\u0439 \u0430\u043a\u043a\u0430\u0443\u043d\u0442, \u043f\u043e\u0442\u043e\u043c \u0441\u043d\u043e\u0432\u0430 \u043d\u0430\u0436\u043c\u0438 \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044e.",
-    "supabaseMissing": "Supabase \u0435\u0449\u0451 \u043d\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0451\u043d: \u0432\u0441\u0442\u0430\u0432\u044c url \u0438 anonKey \u0432 supabase-config.js.",
-    "loginRequired": "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0432\u043e\u0439\u0434\u0438 \u0432 \u0430\u043a\u043a\u0430\u0443\u043d\u0442 Supabase.",
+    "onlineUploadDisabled": "Онлайн-загрузка отключена в этой статической версии.",
+    "loginRequired": "Сначала используй локальный профиль.",
     "uploadFailed": "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u043c\u043e\u0434",
     "deleteMod": "\u0423\u0434\u0430\u043b\u0438\u0442\u044c",
     "deleteConfirm": "\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u044d\u0442\u043e\u0442 \u043c\u043e\u0434?",
@@ -108,15 +108,15 @@
     "profileMenuAria": "Profile menu",
     "accountStatusGuest": "Guest mode",
     "accountStatusLocal": "Demo account",
-    "accountStatusLive": "Supabase",
+    "accountStatusLive": "Online",
     "openAccountSettings": "Log in and sign up",
     "menuUploadMod": "Upload mod",
     "menuDrafts": "My drafts",
     "menuLanguage": "Language",
     "menuBackend": "Storage",
-    "menuComingSoon": "Supabase stores accounts, mod files and catalog cards.",
+    "menuComingSoon": "This static version stores profile settings only in this browser.",
     "accountTitle": "Account",
-    "accountHelp": "Accounts use Supabase Auth. You need to log in before publishing a mod.",
+    "accountHelp": "This static version uses a local browser profile. Real uploads are disabled.",
     "passwordLabel": "Password",
     "loginButton": "Log in",
     "signupButton": "Create",
@@ -168,11 +168,11 @@
     "uploadRuleDescription": "Describe features, installation and the supported game version.",
     "uploadRuleSafety": "Do not upload harmful files, copied mods without permission, or misleading descriptions.",
     "uploadNeedFile": "Attach a .zip or .dll mod file.",
-    "uploadStored": "Mod uploaded to Supabase and sent for manual review.",
-    "uploadPublishing": "Uploading files to Supabase...",
+    "uploadStored": "Upload backend is disabled in this static package.",
+    "uploadPublishing": "Preparing local preview...",
     "loginOpened": "Log in or create an account first, then press publish again.",
-    "supabaseMissing": "Supabase is not connected yet: put url and anonKey into supabase-config.js.",
-    "loginRequired": "Log in to your Supabase account first.",
+    "onlineUploadDisabled": "Online uploads are disabled in this static package.",
+    "loginRequired": "Use the local profile first.",
     "uploadFailed": "Could not upload the mod",
     "deleteMod": "Delete",
     "deleteConfirm": "Delete this mod?",
@@ -284,11 +284,11 @@ let draftMods = JSON.parse(localStorage.getItem("auModsDrafts") || "[]");
 let localUsers = JSON.parse(localStorage.getItem("auModsUsers") || "[]");
 let sessionUser = JSON.parse(localStorage.getItem("auModsUser") || "null");
 let profileSettings = JSON.parse(localStorage.getItem("auModsProfile") || "{}");
-let supabaseClient = null;
-const supabaseConfig = window.AU_SUPABASE || {};
-const hasSupabase = Boolean(supabaseConfig.url && supabaseConfig.anonKey && window.supabase);
+let onlineBackendClient = null;
+const onlineBackendConfig = window.AU_BACKEND || {};
+const hasOnlineBackend = Boolean(onlineBackendConfig.url && onlineBackendConfig.anonKey && window.remoteBackend);
 let pendingUploadRecord = null;
-if (hasSupabase) supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey);
+if (hasOnlineBackend) onlineBackendClient = window.remoteBackend.createClient(onlineBackendConfig.url, onlineBackendConfig.anonKey);
 
 function getAllMods() {
   const localDrafts = draftMods.map((mod) => ({
@@ -426,7 +426,7 @@ function renderProfileMenu() {
     <button class="profile-menu-item" type="button" data-profile-action="upload">${t("menuUploadMod")}</button>
     <button class="profile-menu-item" type="button" data-profile-action="drafts">${t("menuDrafts")}: ${draftMods.length}</button>
     <div class="profile-menu-note"><strong>${t("menuLanguage")}</strong><span>${currentLang.toUpperCase()}</span></div>
-    <div class="profile-menu-note"><strong>${t("menuBackend")}</strong><span>${hasSupabase ? "Supabase" : "Demo"}</span></div>
+    <div class="profile-menu-note"><strong>${t("menuBackend")}</strong><span>Static</span></div>
     <p>${t("menuComingSoon")}</p>
     ${actionButton}
   `;
@@ -447,7 +447,7 @@ function renderAccountPanel() {
   accountPanel.innerHTML = `
     <h4>${t("profileTitle")}</h4>
     <p>${sessionUser || profileSettings.nickname ? name : t("guestText")}</p>
-    <div class="meta"><span class="tag">${t("draftsLabel")}: ${draftMods.length}</span><span class="tag">${hasSupabase ? "Supabase" : "Demo"}</span></div>
+    <div class="meta"><span class="tag">${t("draftsLabel")}: ${draftMods.length}</span><span class="tag">Static</span></div>
   `;
 }
 function renderChips() {
@@ -567,17 +567,17 @@ function hideModDetail(updateHistory = true) {
 }
 
 async function loadSession() {
-  if (!supabaseClient) return;
-  const { data } = await supabaseClient.auth.getSession();
+  if (!onlineBackendClient) return;
+  const { data } = await onlineBackendClient.auth.getSession();
   if (data.session?.user) {
     sessionUser = { email: data.session.user.email, id: data.session.user.id, live: true };
     localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
   }
 }
 
-async function loadModsFromSupabase() {
-  if (!supabaseClient) return;
-  const { data, error } = await supabaseClient.from("mods").select("*").eq("published", true).order("created_at", { ascending: false });
+async function loadModsFromOnlineBackend() {
+  if (!onlineBackendClient) return;
+  const { data, error } = await onlineBackendClient.from("mods").select("*").eq("published", true).order("created_at", { ascending: false });
   if (error || !Array.isArray(data)) return;
   serverMods = data.map((row) => {
     const screenshots = Array.isArray(row.screenshots) ? row.screenshots : [];
@@ -596,7 +596,7 @@ async function loadModsFromSupabase() {
       filePath: row.file_path || "",
       screenshotPaths: screenshots.map((shot) => shot.path).filter(Boolean),
       canDelete: Boolean(sessionUser?.id && row.author_id === sessionUser.id),
-      owner: "supabase"
+      owner: "online"
     };
   });
 }
@@ -605,7 +605,7 @@ async function auth(mode) {
   const password = document.querySelector("#passwordInput").value;
   if (!email || !password) { accountMessage.textContent = t("fillAuth"); return; }
 
-  if (!supabaseClient) {
+  if (!onlineBackendClient) {
     const existing = localUsers.find((user) => user.email === email);
     if (mode === "signup") {
       if (existing) { accountMessage.textContent = t("accountExists"); return; }
@@ -627,21 +627,21 @@ async function auth(mode) {
   }
 
   const result = mode === "signup"
-    ? await supabaseClient.auth.signUp({ email, password })
-    : await supabaseClient.auth.signInWithPassword({ email, password });
+    ? await onlineBackendClient.auth.signUp({ email, password })
+    : await onlineBackendClient.auth.signInWithPassword({ email, password });
   if (result.error) { accountMessage.textContent = result.error.message; return; }
   await loadSession();
   if (!sessionUser && result.data.user) sessionUser = { email, id: result.data.user.id, live: true };
   if (sessionUser) localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
-  await loadModsFromSupabase();
+  await loadModsFromOnlineBackend();
   accountDialog.close();
   applyLanguage();
   if (pendingUploadRecord) {
     uploadMessage.textContent = t("uploadPublishing");
     try {
-      await publishModToSupabase(pendingUploadRecord);
+      await publishModToOnlineBackend(pendingUploadRecord);
       pendingUploadRecord = null;
-      await loadModsFromSupabase();
+      await loadModsFromOnlineBackend();
       uploadMessage.textContent = t("uploadStored");
       clearUploadForm();
       renderAccountPanel();
@@ -769,21 +769,21 @@ function sanitizeStorageName(name) {
 }
 
 function getPublicStorageUrl(bucket, path) {
-  const { data } = supabaseClient.storage.from(bucket).getPublicUrl(path);
+  const { data } = onlineBackendClient.storage.from(bucket).getPublicUrl(path);
   return data?.publicUrl || "#";
 }
 
-async function getSupabaseUser() {
-  if (!supabaseClient) return null;
-  const { data, error } = await supabaseClient.auth.getUser();
+async function getOnlineBackendUser() {
+  if (!onlineBackendClient) return null;
+  const { data, error } = await onlineBackendClient.auth.getUser();
   if (error) return null;
   return data.user || null;
 }
 
-async function uploadFileToSupabase(bucket, userId, file, prefix = "") {
+async function uploadFileToOnlineBackend(bucket, userId, file, prefix = "") {
   const cleanName = sanitizeStorageName(file.name);
   const path = `${userId}/${Date.now()}-${prefix}${cleanName}`;
-  const { error } = await supabaseClient.storage.from(bucket).upload(path, file, {
+  const { error } = await onlineBackendClient.storage.from(bucket).upload(path, file, {
     cacheControl: "3600",
     upsert: false
   });
@@ -791,16 +791,16 @@ async function uploadFileToSupabase(bucket, userId, file, prefix = "") {
   return { path, url: getPublicStorageUrl(bucket, path) };
 }
 
-async function publishModToSupabase(record, userOverride = null) {
-  if (!supabaseClient) throw new Error(t("supabaseMissing"));
-  const user = userOverride || await getSupabaseUser();
+async function publishModToOnlineBackend(record, userOverride = null) {
+  if (!onlineBackendClient) throw new Error(t("onlineUploadDisabled"));
+  const user = userOverride || await getOnlineBackendUser();
   if (!user) throw new Error(t("loginRequired"));
 
-  const modFile = await uploadFileToSupabase("mod-files", user.id, record.fileBlob);
+  const modFile = await uploadFileToOnlineBackend("mod-files", user.id, record.fileBlob);
   const screenshots = [];
   for (let index = 0; index < record.screenshots.length; index += 1) {
     const shot = record.screenshots[index];
-    const uploaded = await uploadFileToSupabase("mod-screenshots", user.id, shot.blob, `${index + 1}-`);
+    const uploaded = await uploadFileToOnlineBackend("mod-screenshots", user.id, shot.blob, `${index + 1}-`);
     screenshots.push({ image: uploaded.url, path: uploaded.path, title: { ru: shot.name, en: shot.name } });
   }
 
@@ -821,7 +821,7 @@ async function publishModToSupabase(record, userOverride = null) {
     published: false
   };
 
-  const { error } = await supabaseClient.from("mods").insert(payload);
+  const { error } = await onlineBackendClient.from("mods").insert(payload);
   if (error) throw error;
 }
 function buildUploadRecord() {
@@ -866,14 +866,14 @@ function clearUploadForm() {
 async function saveDraft() {
   const record = buildUploadRecord();
   if (!record) return;
-  if (!supabaseClient) { uploadMessage.textContent = t("supabaseMissing"); return; }
-  const user = await getSupabaseUser();
+  if (!onlineBackendClient) { uploadMessage.textContent = t("onlineUploadDisabled"); return; }
+  const user = await getOnlineBackendUser();
   if (!user) { openLoginForUpload(record); return; }
   uploadMessage.textContent = t("uploadPublishing");
   try {
-    await publishModToSupabase(record, user);
+    await publishModToOnlineBackend(record, user);
     pendingUploadRecord = null;
-    await loadModsFromSupabase();
+    await loadModsFromOnlineBackend();
     uploadMessage.textContent = t("uploadStored");
     clearUploadForm();
     renderAccountPanel();
@@ -894,14 +894,14 @@ function deleteDraftMod(id) {
   applyLanguage();
 }
 
-async function deleteSupabaseMod(id) {
+async function deleteOnlineBackendMod(id) {
   const mod = serverMods.find((item) => item.id === id && item.canDelete);
-  if (!mod || !supabaseClient) return;
-  const { error } = await supabaseClient.from("mods").delete().eq("id", id);
+  if (!mod || !onlineBackendClient) return;
+  const { error } = await onlineBackendClient.from("mods").delete().eq("id", id);
   if (error) { alert(error.message); return; }
-  if (mod.filePath) await supabaseClient.storage.from("mod-files").remove([mod.filePath]);
-  if (mod.screenshotPaths?.length) await supabaseClient.storage.from("mod-screenshots").remove(mod.screenshotPaths);
-  await loadModsFromSupabase();
+  if (mod.filePath) await onlineBackendClient.storage.from("mod-files").remove([mod.filePath]);
+  if (mod.screenshotPaths?.length) await onlineBackendClient.storage.from("mod-screenshots").remove(mod.screenshotPaths);
+  await loadModsFromOnlineBackend();
   if (selectedModId === id) hideModDetail(false);
   applyLanguage();
 }
@@ -919,7 +919,7 @@ async function deleteOwnMod(id) {
     return;
   }
   if (draftMods.some((mod) => mod.id === id)) { deleteDraftMod(id); return; }
-  if (serverMods.some((mod) => mod.id === id && mod.canDelete)) await deleteSupabaseMod(id);
+  if (serverMods.some((mod) => mod.id === id && mod.canDelete)) await deleteOnlineBackendMod(id);
 }
 detailScreenshots?.addEventListener("click", (event) => {
   const button = event.target.closest("[data-lightbox-src]");
@@ -966,7 +966,7 @@ profileMenu.addEventListener("click", async (event) => {
     return;
   }
   if (action === "logout") {
-    if (supabaseClient && sessionUser?.live) await supabaseClient.auth.signOut();
+    if (onlineBackendClient && sessionUser?.live) await onlineBackendClient.auth.signOut();
     serverMods = serverMods.map((mod) => ({ ...mod, canDelete: false }));
     sessionUser = null;
     localStorage.removeItem("auModsUser");
@@ -1027,7 +1027,7 @@ window.addEventListener("scroll", () => requestAnimationFrame(updateParallaxBack
 window.addEventListener("resize", updateParallaxBackground);
 (async function init() {
   await loadSession();
-  await loadModsFromSupabase();
+  await loadModsFromOnlineBackend();
   await loadUploadedMods();
   renderChips();
   applyLanguage();
@@ -1040,3 +1040,5 @@ window.addEventListener("resize", updateParallaxBackground);
   }
   updateParallaxBackground();
 })();
+
+

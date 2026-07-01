@@ -27,9 +27,9 @@
   <main class="upload-page">
     <section class="upload-hero compact-hero">
       <div>
-        <p class="eyebrow">Manual review</p>
+        <p class="eyebrow">Static preview</p>
         <h2>Submit mod</h2>
-        <p class="muted">Fill the fields and check the live preview. The mod will be uploaded as hidden and sent to the site owner for manual review.</p>
+        <p class="muted">Fill the fields and check the live preview. The mod will be uploaded as hidden and sent to the site owner for Static preview.</p>
       </div>
       <div class="upload-status-panel">
         <strong id="uploadStatusTitle">Account</strong>
@@ -86,11 +86,11 @@
             <li>Use clear screenshots when the mod changes gameplay, visuals, planets, tools, menus, or blocks.</li>
             <li>Write what the mod does, what game build it supports, and how to install it.</li>
             <li>Do not upload harmful files, stolen work, fake downloads, or misleading descriptions.</li>
-            <li>Submitted mods are hidden until the site owner manually approves them.</li>
+            <li>This static copy does not send files online; contact the site owner manually.</li>
           </ul>
         </section>
 
-        <button class="primary-button publish-button" id="publishButton" type="submit">Submit for review</button>
+        <button class="primary-button publish-button" id="publishButton" type="submit">Create preview</button>
         <p class="notice" id="uploadMessage"></p>
       </form>
 
@@ -114,10 +114,9 @@
       </aside>
     </section>
   </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js?v=20260630-login-upload-fix"></script>
-  <script src="upload.js?v=20260701-shared-account"></script>
+  <script src="upload.js?v=20260701-static-no-backend"></script>
 </body>
 </html>
+
+
 

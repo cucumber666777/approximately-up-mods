@@ -1,11 +1,6 @@
-﻿const supabaseConfig = window.AU_SUPABASE || {};
-const hasSupabase = Boolean(supabaseConfig.url && supabaseConfig.anonKey && window.supabase);
-const supabaseClient = hasSupabase ? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey) : null;
-let sessionUser = null;
-let screenshotUrls = [];
+﻿let screenshotUrls = [];
 const DEFAULT_AVATAR = "assets/default-avatar.png";
 let profileSettings = JSON.parse(localStorage.getItem("auModsProfile") || "{}");
-const REVIEW_EMAIL = "cucumber993993@gmail.com";
 
 const refs = {
   accountButton: document.querySelector("#accountButton"),
@@ -62,48 +57,30 @@ function statusLabel(value) {
   return "Needs check";
 }
 
-function sanitizeStorageName(name) {
-  return String(name || "file").toLowerCase().replace(/[^a-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "") || "file";
+function readLocalUser() {
+  return JSON.parse(localStorage.getItem("auModsUser") || "null");
 }
 
-function getPublicStorageUrl(bucket, path) {
-  const { data } = supabaseClient.storage.from(bucket).getPublicUrl(path);
-  return data?.publicUrl || "#";
-}
-
-async function getSupabaseUser() {
-  if (!supabaseClient) return null;
-  const { data: sessionData } = await supabaseClient.auth.getSession();
-  if (sessionData.session?.user) return sessionData.session.user;
-  const { data, error } = await supabaseClient.auth.getUser();
-  if (error) return null;
-  return data.user || null;
-}
-
-function getProfileDisplayName(user) {
-  const storedUser = JSON.parse(localStorage.getItem("auModsUser") || "null");
-  return profileSettings.nickname || storedUser?.nickname || user?.user_metadata?.name || user?.email?.split("@")[0] || "Guest";
+function getProfileName() {
+  const user = readLocalUser();
+  return profileSettings.nickname || user?.email?.split("@")[0] || "Guest";
 }
 
 function getProfileAvatar() {
   return profileSettings.avatar || DEFAULT_AVATAR;
 }
 
-function rememberSessionUser(user) {
-  if (!user) {
-    sessionUser = null;
-    localStorage.removeItem("auModsUser");
-    return;
-  }
-  sessionUser = { id: user.id, email: user.email, live: true };
-  localStorage.setItem("auModsUser", JSON.stringify(sessionUser));
-}
-
-async function uploadFileToSupabase(bucket, userId, file, prefix = "") {
-  const path = `${userId}/${Date.now()}-${prefix}${sanitizeStorageName(file.name)}`;
-  const { error } = await supabaseClient.storage.from(bucket).upload(path, file, { cacheControl: "3600", upsert: false });
-  if (error) throw error;
-  return { path, url: getPublicStorageUrl(bucket, path) };
+function refreshAccount() {
+  profileSettings = JSON.parse(localStorage.getItem("auModsProfile") || "{}");
+  const name = getProfileName();
+  const avatar = getProfileAvatar();
+  refs.profileName.textContent = name;
+  refs.profileAvatar.src = avatar;
+  refs.profileAvatar.alt = name;
+  refs.statusTitle.textContent = "Static package";
+  refs.statusText.textContent = "Real online uploads are disabled in this copy.";
+  refs.authBox.hidden = true;
+  refs.profileMenu.innerHTML = `<div class="profile-menu-head"><img class="avatar avatar-image large" src="${escapeHtml(avatar)}" alt="${escapeHtml(name)}"><div><strong>${escapeHtml(name)}</strong><small>Local browser profile</small></div></div><a class="profile-menu-item" href="index.html">Open catalog</a>`;
 }
 
 function updateFileLabels() {
@@ -112,117 +89,14 @@ function updateFileLabels() {
   const screenshotCount = refs.screenshots.files?.length || 0;
   if (refs.screenshotsName) refs.screenshotsName.textContent = screenshotCount ? `${screenshotCount} file${screenshotCount === 1 ? "" : "s"} selected` : "No file selected";
 }
-function getScreenshotTitle(index, fallback) {
-  const input = refs.screenshotTitles?.querySelector(`[data-screenshot-title="${index}"]`);
-  return text(input?.value, fallback);
-}
 
 function selectedScreenshotFiles() {
   return Array.from(refs.screenshots.files || []).filter((file) => file.type.startsWith("image/")).slice(0, 5);
 }
 
-function buildRecord() {
-  const file = refs.file.files?.[0];
-  if (!text(refs.name.value, "")) throw new Error("Enter the mod name.");
-  if (!file || !/\.(zip|dll)$/i.test(file.name)) throw new Error("Attach a .zip or .dll mod file.");
-  const summary = text(refs.summary.value, text(refs.description.value, refs.name.value));
-  return {
-    name: text(refs.name.value, "Untitled mod"),
-    category: refs.category.value,
-    version: text(refs.version.value, "1.0.0"),
-    gameBuild: text(refs.build.value, "23954373"),
-    loader: text(refs.loader.value, "MelonLoader"),
-    status: refs.status.value,
-    summary,
-    description: text(refs.description.value, summary),
-    fileBlob: file,
-    screenshots: selectedScreenshotFiles().map((file, index) => ({ name: getScreenshotTitle(index, file.name), blob: file }))
-  };
-}
-
-function buildReviewEmailUrl(record, result) {
-  const lines = [
-    "A new Approximately Up mod was submitted for manual review.",
-    "",
-    `Mod: ${record.name}`,
-    `Submitter: ${result.submitterEmail || "unknown"}`,
-    `Supabase row id: ${result.modId || "unknown"}`,
-    `Category: ${record.category}`,
-    `Version: ${record.version}`,
-    `Game build: ${record.gameBuild}`,
-    `Loader: ${record.loader}`,
-    `Status: ${statusLabel(record.status)}`,
-    "",
-    `Mod file: ${result.payload.file_url}`,
-    "",
-    "Screenshots:",
-    ...(result.payload.screenshots.length ? result.payload.screenshots.map((shot, index) => `${index + 1}. ${shot.title?.en || shot.title?.ru || "Screenshot"}: ${shot.image}`) : ["No screenshots attached."]),
-    "",
-    "Short description:",
-    record.summary,
-    "",
-    "Full description:",
-    record.description,
-    "",
-    "To approve it, open Supabase table public.mods and set published = true for this row."
-  ];
-  return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(REVIEW_EMAIL)}&su=${encodeURIComponent(`[AU Mods Review] ${record.name}`)}&body=${encodeURIComponent(lines.join("\n"))}`;
-}
-
-async function publish(record) {
-  if (!supabaseClient) throw new Error("Supabase is not connected. Fill supabase-config.js first.");
-  const user = await getSupabaseUser();
-  if (!user) throw new Error("Log in or create an account first.");
-  const modFile = await uploadFileToSupabase("mod-files", user.id, record.fileBlob);
-  const screenshots = [];
-  for (let index = 0; index < record.screenshots.length; index += 1) {
-    const shot = record.screenshots[index];
-    const uploaded = await uploadFileToSupabase("mod-screenshots", user.id, shot.blob, `${index + 1}-`);
-    screenshots.push({ image: uploaded.url, path: uploaded.path, title: { ru: shot.name, en: shot.name } });
-  }
-  const payload = {
-    author_id: user.id,
-    name: record.name,
-    category: record.category,
-    version: record.version,
-    game_build: record.gameBuild,
-    loader: record.loader,
-    status: record.status,
-    summary_ru: record.summary,
-    summary_en: record.summary,
-    description: record.description,
-    file_url: modFile.url,
-    file_path: modFile.path,
-    screenshots,
-    published: false
-  };
-  const { data, error } = await supabaseClient.from("mods").insert(payload).select("id").single();
-  if (error) throw error;
-  return { payload, modId: data?.id, submitterEmail: user.email };
-}
-
-async function refreshAccount() {
-  profileSettings = JSON.parse(localStorage.getItem("auModsProfile") || "{}");
-  const user = await getSupabaseUser();
-  rememberSessionUser(user);
-  const name = getProfileDisplayName(user);
-  const avatar = getProfileAvatar();
-  refs.profileName.textContent = name;
-  refs.profileAvatar.src = avatar;
-  refs.profileAvatar.alt = name;
-  refs.statusTitle.textContent = user ? "Ready to submit" : "Account required";
-  refs.statusText.textContent = hasSupabase ? (user ? `${name} (${user.email})` : "Use the same account as the catalog or log in here") : "Supabase is not connected";
-  refs.authBox.hidden = Boolean(user);
-  refs.profileMenu.innerHTML = user
-    ? `<div class="profile-menu-head"><img class="avatar avatar-image large" src="${escapeHtml(avatar)}" alt="${escapeHtml(name)}"><div><strong>${escapeHtml(name)}</strong><small>${escapeHtml(user.email || "Supabase")}</small></div></div><a class="profile-menu-item" href="index.html">Open catalog account</a><button class="profile-menu-item danger" type="button" id="logoutButton">Log out</button>`
-    : `<div class="profile-menu-head"><img class="avatar avatar-image large" src="${DEFAULT_AVATAR}" alt="Guest"><div><strong>Guest</strong><small>Not logged in</small></div></div><a class="profile-menu-item" href="index.html">Log in on catalog</a><p>Or log in here to submit a mod for review.</p>`;
-  const logout = document.querySelector("#logoutButton");
-  if (logout) logout.addEventListener("click", async () => {
-    if (supabaseClient) await supabaseClient.auth.signOut();
-    rememberSessionUser(null);
-    refs.profileMenu.hidden = true;
-    await refreshAccount();
-  });
+function getScreenshotTitle(index, fallback) {
+  const input = refs.screenshotTitles?.querySelector(`[data-screenshot-title="${index}"]`);
+  return text(input?.value, fallback);
 }
 
 function refreshScreenshotTitleFields(files) {
@@ -263,29 +137,17 @@ function updatePreview() {
   }).join("") : [1, 2, 3].map((item) => `<div class="screenshot-card"><div class="screenshot-art">${item}</div><span>Screenshot slot ${item}</span></div>`).join(""));
 }
 
-async function auth(mode) {
-  if (!supabaseClient) { refs.accountMessage.textContent = "Supabase is not connected."; return; }
-  const email = refs.email.value.trim().toLowerCase();
-  const password = refs.password.value;
-  if (!email || !password) { refs.accountMessage.textContent = "Enter email and password."; return; }
-  const result = mode === "signup"
-    ? await supabaseClient.auth.signUp({ email, password })
-    : await supabaseClient.auth.signInWithPassword({ email, password });
-  if (result.error) { refs.accountMessage.textContent = result.error.message; return; }
-  if (result.data?.user) rememberSessionUser(result.data.user);
-  refs.accountMessage.textContent = mode === "signup" ? "Account created." : "Logged in.";
-  await refreshAccount();
-}
-
 refs.accountButton.addEventListener("click", (event) => {
   event.stopPropagation();
   refs.profileMenu.hidden = !refs.profileMenu.hidden;
 });
+
 document.addEventListener("click", (event) => {
   if (!event.target.closest(".profile-menu-wrap")) refs.profileMenu.hidden = true;
 });
-refs.login.addEventListener("click", () => auth("login"));
-refs.signup.addEventListener("click", () => auth("signup"));
+
+refs.login?.addEventListener("click", () => { refs.accountMessage.textContent = "Online accounts are disabled in this static copy."; });
+refs.signup?.addEventListener("click", () => { refs.accountMessage.textContent = "Online accounts are disabled in this static copy."; });
 refs.file.addEventListener("change", updateFileLabels);
 refs.screenshots.addEventListener("change", () => { updateFileLabels(); refreshScreenshotUrls(); updatePreview(); });
 refs.screenshotTitles?.addEventListener("input", updatePreview);
@@ -299,36 +161,14 @@ refs.previewScreenshots?.addEventListener("input", (event) => {
   node.addEventListener("input", updatePreview);
   node.addEventListener("change", updatePreview);
 });
-refs.form.addEventListener("submit", async (event) => {
+
+refs.form.addEventListener("submit", (event) => {
   event.preventDefault();
-  refs.uploadMessage.textContent = "";
-  refs.uploadMessage.className = "notice";
-  refs.publish.disabled = true;
-  try {
-    const record = buildRecord();
-    refs.uploadMessage.textContent = "Uploading to Supabase for manual review...";
-    const result = await publish(record);
-    const reviewEmailUrl = buildReviewEmailUrl(record, result);
-    refs.uploadMessage.className = "notice pending-review";
-    refs.uploadMessage.innerHTML = `<strong>Pending review.</strong> Your mod was uploaded, but it is hidden from the catalog until the owner approves it. A Gmail review message has been prepared for cucumber993993@gmail.com. <a href="${escapeHtml(reviewEmailUrl)}" target="_blank" rel="noopener">Open Gmail review email again</a>.`;
-    window.location.href = reviewEmailUrl;
-    refs.form.reset();
-    updateFileLabels();
-    refreshScreenshotUrls();
-    updatePreview();
-  } catch (error) {
-    refs.uploadMessage.textContent = error.message || String(error);
-  } finally {
-    refs.publish.disabled = false;
-  }
+  refs.uploadMessage.className = "notice pending-review";
+  refs.uploadMessage.innerHTML = "<strong>Static preview only.</strong> This copy has no online upload backend. Send the mod file, screenshots and description to the site owner manually.";
 });
 
-if (supabaseClient) {
-  supabaseClient.auth.onAuthStateChange(() => refreshAccount());
-}
 refreshAccount();
 updateFileLabels();
 refreshScreenshotTitleFields([]);
 updatePreview();
-
-
