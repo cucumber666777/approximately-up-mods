@@ -154,9 +154,19 @@ async function refreshAccount() {
   if (logout) logout.addEventListener("click", async () => { await supabaseClient.auth.signOut(); refs.profileMenu.hidden = true; await refreshAccount(); });
 }
 
+function refreshScreenshotTitleFields(files) {
+  if (!refs.screenshotTitles) return;
+  refs.screenshotTitles.innerHTML = files.length ? files.map((file, index) => {
+    const fallback = escapeHtml(file.name.replace(/\.[^.]+$/, ""));
+    return `<label><span>Screenshot title ${index + 1}</span><input type="text" data-screenshot-title="${index}" value="${fallback}" placeholder="Example: Main mod window"></label>`;
+  }).join("") : `<p class="muted small-note">Choose screenshots and title fields will appear here.</p>`;
+}
+
 function refreshScreenshotUrls() {
   screenshotUrls.forEach((url) => URL.revokeObjectURL(url));
-  screenshotUrls = Array.from(refs.screenshots.files || []).filter((file) => file.type.startsWith("image/")).slice(0, 5).map((file) => URL.createObjectURL(file));
+  const files = selectedScreenshotFiles();
+  screenshotUrls = files.map((file) => URL.createObjectURL(file));
+  refreshScreenshotTitleFields(files);
 }
 
 function updatePreview() {
@@ -178,7 +188,7 @@ function updatePreview() {
   refs.previewInfo.innerHTML = `<div><strong>Game build</strong><span>${escapeHtml(build)}</span></div><div><strong>Loader</strong><span>${escapeHtml(loader)}</span></div><div><strong>Status</strong><span>${statusLabel(status)}</span></div>`;
   refs.previewScreenshots.innerHTML = `<h3>Screenshots</h3>` + (screenshotUrls.length ? screenshotUrls.map((url, index) => {
     const title = escapeHtml(getScreenshotTitle(index, `Screenshot ${index + 1}`));
-    return `<div class="screenshot-card"><img class="screenshot-image" src="${url}" alt="${title}"><span>${title}</span></div>`;
+    return `<div class="screenshot-card"><img class="screenshot-image" src="${url}" alt="${title}"><input class="screenshot-caption-input" type="text" data-preview-screenshot-title="${index}" value="${title}" aria-label="Screenshot ${index + 1} title"></div>`;
   }).join("") : [1, 2, 3].map((item) => `<div class="screenshot-card"><div class="screenshot-art">${item}</div><span>Screenshot slot ${item}</span></div>`).join(""));
 }
 
@@ -206,6 +216,12 @@ refs.login.addEventListener("click", () => auth("login"));
 refs.signup.addEventListener("click", () => auth("signup"));
 refs.screenshots.addEventListener("change", () => { refreshScreenshotUrls(); updatePreview(); });
 refs.screenshotTitles?.addEventListener("input", updatePreview);
+refs.previewScreenshots?.addEventListener("input", (event) => {
+  const input = event.target.closest("[data-preview-screenshot-title]");
+  if (!input) return;
+  const source = refs.screenshotTitles?.querySelector(`[data-screenshot-title="${input.dataset.previewScreenshotTitle}"]`);
+  if (source) source.value = input.value;
+});
 [refs.name, refs.category, refs.version, refs.build, refs.loader, refs.status, refs.summary, refs.description, refs.accent, refs.previewBg].forEach((node) => {
   node.addEventListener("input", updatePreview);
   node.addEventListener("change", updatePreview);
@@ -230,4 +246,5 @@ refs.form.addEventListener("submit", async (event) => {
 });
 
 refreshAccount();
+refreshScreenshotTitleFields([]);
 updatePreview();

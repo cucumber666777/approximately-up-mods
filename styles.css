@@ -924,6 +924,27 @@ body.detail-page .topbar {
   margin: 0;
   font-size: 0.84rem;
 }
+
+.screenshot-caption-input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 0;
+  background: rgba(8, 11, 15, 0.28);
+  color: var(--muted);
+  font: inherit;
+}
+
+.screenshot-caption-input:hover,
+.screenshot-caption-input:focus {
+  color: var(--text);
+  background: rgba(12, 17, 24, 0.62);
+  outline: 1px solid rgba(72, 168, 255, 0.52);
+  outline-offset: -1px;
+}
+
 .two-column-fields {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -999,8 +1020,7 @@ body.detail-page .topbar {
 }
 
 @media (max-width: 640px) {
-
-.two-column-fields {
+  .two-column-fields {
     grid-template-columns: 1fr;
   }
 }
