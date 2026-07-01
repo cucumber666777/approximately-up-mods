@@ -305,6 +305,10 @@ const detailSummary = document.querySelector("#detailSummary");
 const detailDownload = document.querySelector("#detailDownload");
 const detailInfo = document.querySelector("#detailInfo");
 const detailScreenshots = document.querySelector("#detailScreenshots");
+const screenshotLightbox = document.querySelector("#screenshotLightbox");
+const lightboxImage = document.querySelector("#lightboxImage");
+const lightboxCaption = document.querySelector("#lightboxCaption");
+const lightboxClose = document.querySelector("#lightboxClose");
 const accountDialog = document.querySelector("#accountDialog");
 const accountButton = document.querySelector("#accountButton");
 const accountPanel = document.querySelector("#accountPanel");
@@ -331,6 +335,7 @@ function applyLanguage() {
   document.querySelectorAll("[data-i18n]").forEach((node) => { node.textContent = t(node.dataset.i18n); });
   document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => { node.placeholder = t(node.dataset.i18nPlaceholder); });
   document.querySelectorAll("[data-i18n-aria]").forEach((node) => { node.setAttribute("aria-label", t(node.dataset.i18nAria)); });
+
 
 document.querySelectorAll(".lang-button").forEach((button) => { button.classList.toggle("active", button.dataset.lang === currentLang); });
   renderProfileButton();
@@ -501,13 +506,28 @@ function showModDetail(modId, shouldScroll = true, updateHistory = true) {
   detailScreenshots.innerHTML = `<h3>${t("screenshots")}</h3>` + screenshots.map((shot, index) => {
     const title = shot.title?.[currentLang] || shot.title?.en || shot.title || mod.name;
     return `<div class="screenshot-card">
-      ${shot.image ? `<img class="screenshot-image" src="${shot.image}" alt="${title}">` : `<div class="screenshot-art">${index + 1}</div>`}
-      <span>${title}</span>
+      ${shot.image ? `<button class="screenshot-open" type="button" data-lightbox-src="${escapeAttribute(shot.image)}" data-lightbox-title="${escapeAttribute(title)}"><img class="screenshot-image" src="${escapeAttribute(shot.image)}" alt="${escapeAttribute(title)}"></button>` : `<div class="screenshot-art">${index + 1}</div>`}
+      <span>${escapeAttribute(title)}</span>
     </div>`;
   }).join("");
   if (shouldScroll) window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function openScreenshotLightbox(src, title) {
+  if (!screenshotLightbox || !lightboxImage || !lightboxCaption) return;
+  lightboxImage.src = src;
+  lightboxImage.alt = title;
+  lightboxCaption.textContent = title;
+  if (typeof screenshotLightbox.showModal === "function") screenshotLightbox.showModal();
+  else screenshotLightbox.setAttribute("open", "");
+}
+
+function closeScreenshotLightbox() {
+  if (!screenshotLightbox) return;
+  if (typeof screenshotLightbox.close === "function" && screenshotLightbox.open) screenshotLightbox.close();
+  else screenshotLightbox.removeAttribute("open");
+  if (lightboxImage) lightboxImage.removeAttribute("src");
+}
 function hideModDetail(updateHistory = true) {
   if (updateHistory && selectedModId && location.hash) {
     history.pushState(null, "", location.pathname + location.search);
@@ -875,6 +895,18 @@ async function deleteOwnMod(id) {
   if (draftMods.some((mod) => mod.id === id)) { deleteDraftMod(id); return; }
   if (serverMods.some((mod) => mod.id === id && mod.canDelete)) await deleteSupabaseMod(id);
 }
+detailScreenshots?.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-lightbox-src]");
+  if (!button) return;
+  openScreenshotLightbox(button.dataset.lightboxSrc, button.dataset.lightboxTitle || "Screenshot");
+});
+lightboxClose?.addEventListener("click", closeScreenshotLightbox);
+screenshotLightbox?.addEventListener("click", (event) => {
+  if (event.target === screenshotLightbox) closeScreenshotLightbox();
+});
+screenshotLightbox?.addEventListener("close", () => {
+  if (lightboxImage) lightboxImage.removeAttribute("src");
+});
 document.querySelectorAll(".lang-button").forEach((button) => {
   button.addEventListener("click", () => { currentLang = button.dataset.lang; localStorage.setItem("auModsLang", currentLang); applyLanguage(); });
 });
