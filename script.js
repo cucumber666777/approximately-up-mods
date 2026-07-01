@@ -58,7 +58,7 @@
     "uploadRuleDescription": "\u041e\u043f\u0438\u0448\u0438 \u0444\u0443\u043d\u043a\u0446\u0438\u0438, \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0443 \u0438 \u0432\u0435\u0440\u0441\u0438\u044e \u0438\u0433\u0440\u044b.",
     "uploadRuleSafety": "\u041d\u0435 \u0432\u044b\u043a\u043b\u0430\u0434\u044b\u0432\u0430\u0439 \u0432\u0440\u0435\u0434\u043d\u044b\u0435 \u0444\u0430\u0439\u043b\u044b, \u0447\u0443\u0436\u0438\u0435 \u043c\u043e\u0434\u044b \u0431\u0435\u0437 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u044f \u0438 \u043e\u0431\u043c\u0430\u043d\u043d\u044b\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u044f.",
     "uploadNeedFile": "\u041f\u0440\u0438\u043a\u0440\u0435\u043f\u0438 .zip \u0438\u043b\u0438 .dll \u0444\u0430\u0439\u043b \u043c\u043e\u0434\u0430.",
-    "uploadStored": "\u041c\u043e\u0434 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d \u0432 Supabase \u0438 \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d \u0432 \u043a\u0430\u0442\u0430\u043b\u043e\u0433.",
+    "uploadStored": "\u041c\u043e\u0434 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d \u0432 Supabase \u0438 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d \u043d\u0430 \u0440\u0443\u0447\u043d\u0443\u044e \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0443.",
     "uploadPublishing": "\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u044e \u0444\u0430\u0439\u043b\u044b \u0432 Supabase...",
     "loginOpened": "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0432\u043e\u0439\u0434\u0438 \u0438\u043b\u0438 \u0441\u043e\u0437\u0434\u0430\u0439 \u0430\u043a\u043a\u0430\u0443\u043d\u0442, \u043f\u043e\u0442\u043e\u043c \u0441\u043d\u043e\u0432\u0430 \u043d\u0430\u0436\u043c\u0438 \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u044e.",
     "supabaseMissing": "Supabase \u0435\u0449\u0451 \u043d\u0435 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0451\u043d: \u0432\u0441\u0442\u0430\u0432\u044c url \u0438 anonKey \u0432 supabase-config.js.",
@@ -142,7 +142,7 @@
     "uploadRuleDescription": "Describe features, installation and the supported game version.",
     "uploadRuleSafety": "Do not upload harmful files, copied mods without permission, or misleading descriptions.",
     "uploadNeedFile": "Attach a .zip or .dll mod file.",
-    "uploadStored": "Mod uploaded to Supabase and added to the catalog.",
+    "uploadStored": "Mod uploaded to Supabase and sent for manual review.",
     "uploadPublishing": "Uploading files to Supabase...",
     "loginOpened": "Log in or create an account first, then press publish again.",
     "supabaseMissing": "Supabase is not connected yet: put url and anonKey into supabase-config.js.",
@@ -792,7 +792,7 @@ async function publishModToSupabase(record, userOverride = null) {
     file_url: modFile.url,
     file_path: modFile.path,
     screenshots,
-    published: true
+    published: false
   };
 
   const { error } = await supabaseClient.from("mods").insert(payload);

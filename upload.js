@@ -3,6 +3,7 @@ const hasSupabase = Boolean(supabaseConfig.url && supabaseConfig.anonKey && wind
 const supabaseClient = hasSupabase ? window.supabase.createClient(supabaseConfig.url, supabaseConfig.anonKey) : null;
 let sessionUser = null;
 let screenshotUrls = [];
+const REVIEW_EMAIL = "cucumber993993@gmail.com";
 
 const refs = {
   accountButton: document.querySelector("#accountButton"),
@@ -108,6 +109,35 @@ function buildRecord() {
   };
 }
 
+function buildReviewEmailUrl(record, result) {
+  const lines = [
+    "A new Approximately Up mod was submitted for manual review.",
+    "",
+    `Mod: ${record.name}`,
+    `Submitter: ${result.submitterEmail || "unknown"}`,
+    `Supabase row id: ${result.modId || "unknown"}`,
+    `Category: ${record.category}`,
+    `Version: ${record.version}`,
+    `Game build: ${record.gameBuild}`,
+    `Loader: ${record.loader}`,
+    `Status: ${statusLabel(record.status)}`,
+    "",
+    `Mod file: ${result.payload.file_url}`,
+    "",
+    "Screenshots:",
+    ...(result.payload.screenshots.length ? result.payload.screenshots.map((shot, index) => `${index + 1}. ${shot.title?.en || shot.title?.ru || "Screenshot"}: ${shot.image}`) : ["No screenshots attached."]),
+    "",
+    "Short description:",
+    record.summary,
+    "",
+    "Full description:",
+    record.description,
+    "",
+    "To approve it, open Supabase table public.mods and set published = true for this row."
+  ];
+  return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(REVIEW_EMAIL)}&su=${encodeURIComponent(`[AU Mods Review] ${record.name}`)}&body=${encodeURIComponent(lines.join("\n"))}`;
+}
+
 async function publish(record) {
   if (!supabaseClient) throw new Error("Supabase is not connected. Fill supabase-config.js first.");
   const user = await getSupabaseUser();
@@ -133,10 +163,11 @@ async function publish(record) {
     file_url: modFile.url,
     file_path: modFile.path,
     screenshots,
-    published: true
+    published: false
   };
-  const { error } = await supabaseClient.from("mods").insert(payload);
+  const { data, error } = await supabaseClient.from("mods").insert(payload).select("id").single();
   if (error) throw error;
+  return { payload, modId: data?.id, submitterEmail: user.email };
 }
 
 async function refreshAccount() {
@@ -144,12 +175,12 @@ async function refreshAccount() {
   const name = sessionUser?.email?.split("@")[0] || "Guest";
   refs.profileName.textContent = name;
   refs.profileAvatar.alt = name;
-  refs.statusTitle.textContent = sessionUser ? "Ready to publish" : "Account required";
-  refs.statusText.textContent = hasSupabase ? (sessionUser ? sessionUser.email : "Log in before publishing") : "Supabase is not connected";
+  refs.statusTitle.textContent = sessionUser ? "Ready to submit" : "Account required";
+  refs.statusText.textContent = hasSupabase ? (sessionUser ? sessionUser.email : "Log in before submitting") : "Supabase is not connected";
   refs.authBox.hidden = Boolean(sessionUser);
   refs.profileMenu.innerHTML = sessionUser
     ? `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="${name}"><div><strong>${name}</strong><small>Supabase</small></div></div><button class="profile-menu-item danger" type="button" id="logoutButton">Log out</button>`
-    : `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="Guest"><div><strong>Guest</strong><small>Not logged in</small></div></div><p>Log in on this page to publish a mod.</p>`;
+    : `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="Guest"><div><strong>Guest</strong><small>Not logged in</small></div></div><p>Log in on this page to submit a mod for review.</p>`;
   const logout = document.querySelector("#logoutButton");
   if (logout) logout.addEventListener("click", async () => { await supabaseClient.auth.signOut(); refs.profileMenu.hidden = true; await refreshAccount(); });
 }
@@ -232,9 +263,11 @@ refs.form.addEventListener("submit", async (event) => {
   refs.publish.disabled = true;
   try {
     const record = buildRecord();
-    refs.uploadMessage.textContent = "Uploading to Supabase...";
-    await publish(record);
-    refs.uploadMessage.textContent = "Mod published. It should appear in the catalog now.";
+    refs.uploadMessage.textContent = "Uploading to Supabase for manual review...";
+    const result = await publish(record);
+    const reviewEmailUrl = buildReviewEmailUrl(record, result);
+    refs.uploadMessage.innerHTML = `Submitted for review. The mod is hidden until approved. <a href="${escapeHtml(reviewEmailUrl)}" target="_blank" rel="noopener">Open Gmail review email again</a>.`;
+    window.location.href = reviewEmailUrl;
     refs.form.reset();
     refreshScreenshotUrls();
     updatePreview();

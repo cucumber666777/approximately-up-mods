@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Upload mod - Approximately Up Mods</title>
-  <link rel="stylesheet" href="styles.css?v=20260701-preview-caption-edit">
+  <link rel="stylesheet" href="styles.css?v=20260701-manual-review">
 </head>
 <body>
   <header class="topbar">
@@ -27,9 +27,9 @@
   <main class="upload-page">
     <section class="upload-hero compact-hero">
       <div>
-        <p class="eyebrow">Publish</p>
-        <h2>Upload mod</h2>
-        <p class="muted">Fill the fields, check the live preview, then publish. The mod file and screenshots will be uploaded to Supabase.</p>
+        <p class="eyebrow">Manual review</p>
+        <h2>Submit mod</h2>
+        <p class="muted">Fill the fields and check the live preview. The mod will be uploaded as hidden and sent to the site owner for manual review.</p>
       </div>
       <div class="upload-status-panel">
         <strong id="uploadStatusTitle">Account</strong>
@@ -88,7 +88,7 @@
           </ul>
         </section>
 
-        <button class="primary-button publish-button" id="publishButton" type="submit">Publish mod</button>
+        <button class="primary-button publish-button" id="publishButton" type="submit">Submit for review</button>
         <p class="notice" id="uploadMessage"></p>
       </form>
 
@@ -115,6 +115,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js?v=20260630-login-upload-fix"></script>
-  <script src="upload.js?v=20260701-preview-caption-edit"></script>
+  <script src="upload.js?v=20260701-manual-review"></script>
 </body>
 </html>

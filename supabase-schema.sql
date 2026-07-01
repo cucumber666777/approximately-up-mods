@@ -20,12 +20,12 @@ create table if not exists public.mods (
   file_url text,
   file_path text,
   screenshots jsonb not null default '[]'::jsonb,
-  published boolean not null default true
+  published boolean not null default false
 );
 
 alter table public.mods add column if not exists file_path text;
 alter table public.mods add column if not exists screenshots jsonb not null default '[]'::jsonb;
-alter table public.mods alter column published set default true;
+alter table public.mods alter column published set default false;
 
 alter table public.mods enable row level security;
 
