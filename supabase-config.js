@@ -1,5 +1,4 @@
 ﻿window.AU_SUPABASE = {
-  // Paste values from Supabase Project Settings -> API.
-  url: "",
-  anonKey: ""
+  url: "https://dutdsoswzpyucqalldjw.supabase.co",
+  anonKey: "sb_publishable_HdiYWpkcCoLXs-aX3wsyMg_2ES8_BTM"
 };
