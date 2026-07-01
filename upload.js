@@ -20,7 +20,9 @@ const refs = {
   accountMessage: document.querySelector("#accountMessage"),
   form: document.querySelector("#uploadForm"),
   file: document.querySelector("#modFileInput"),
+  fileName: document.querySelector("#modFileName"),
   screenshots: document.querySelector("#modScreenshotsInput"),
+  screenshotsName: document.querySelector("#modScreenshotsName"),
   screenshotTitles: document.querySelector("#screenshotTitleList"),
   name: document.querySelector("#modNameInput"),
   category: document.querySelector("#modCategoryInput"),
@@ -81,6 +83,12 @@ async function uploadFileToSupabase(bucket, userId, file, prefix = "") {
   return { path, url: getPublicStorageUrl(bucket, path) };
 }
 
+function updateFileLabels() {
+  const modFile = refs.file.files?.[0];
+  if (refs.fileName) refs.fileName.textContent = modFile ? modFile.name : "No file selected";
+  const screenshotCount = refs.screenshots.files?.length || 0;
+  if (refs.screenshotsName) refs.screenshotsName.textContent = screenshotCount ? `${screenshotCount} file${screenshotCount === 1 ? "" : "s"} selected` : "No file selected";
+}
 function getScreenshotTitle(index, fallback) {
   const input = refs.screenshotTitles?.querySelector(`[data-screenshot-title="${index}"]`);
   return text(input?.value, fallback);
@@ -245,7 +253,8 @@ document.addEventListener("click", (event) => {
 });
 refs.login.addEventListener("click", () => auth("login"));
 refs.signup.addEventListener("click", () => auth("signup"));
-refs.screenshots.addEventListener("change", () => { refreshScreenshotUrls(); updatePreview(); });
+refs.file.addEventListener("change", updateFileLabels);
+refs.screenshots.addEventListener("change", () => { updateFileLabels(); refreshScreenshotUrls(); updatePreview(); });
 refs.screenshotTitles?.addEventListener("input", updatePreview);
 refs.previewScreenshots?.addEventListener("input", (event) => {
   const input = event.target.closest("[data-preview-screenshot-title]");
@@ -271,6 +280,7 @@ refs.form.addEventListener("submit", async (event) => {
     refs.uploadMessage.innerHTML = `<strong>Pending review.</strong> Your mod was uploaded, but it is hidden from the catalog until the owner approves it. A Gmail review message has been prepared for cucumber993993@gmail.com. <a href="${escapeHtml(reviewEmailUrl)}" target="_blank" rel="noopener">Open Gmail review email again</a>.`;
     window.location.href = reviewEmailUrl;
     refs.form.reset();
+    updateFileLabels();
     refreshScreenshotUrls();
     updatePreview();
   } catch (error) {
@@ -281,5 +291,6 @@ refs.form.addEventListener("submit", async (event) => {
 });
 
 refreshAccount();
+updateFileLabels();
 refreshScreenshotTitleFields([]);
 updatePreview();

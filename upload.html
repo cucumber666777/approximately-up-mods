@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Upload mod - Approximately Up Mods</title>
-  <link rel="stylesheet" href="styles.css?v=20260701-final-docs">
+  <link rel="stylesheet" href="styles.css?v=20260701-custom-file-inputs">
 </head>
 <body>
   <header class="topbar">
@@ -54,8 +54,8 @@
 
         <section class="builder-section">
           <h3>Files</h3>
-          <label><span>Mod file</span><input id="modFileInput" type="file" accept=".zip,.dll" required></label>
-          <label><span>Screenshots</span><input id="modScreenshotsInput" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
+          <label class="file-picker"><span>Mod file</span><input class="native-file-input" id="modFileInput" type="file" accept=".zip,.dll" required><span class="file-picker-control"><span class="file-picker-button">Choose file</span><span class="file-picker-name" id="modFileName">No file selected</span></span></label>
+          <label class="file-picker"><span>Screenshots</span><input class="native-file-input" id="modScreenshotsInput" type="file" accept="image/png,image/jpeg,image/webp" multiple><span class="file-picker-control"><span class="file-picker-button">Choose files</span><span class="file-picker-name" id="modScreenshotsName">No file selected</span></span></label>
           <div class="screenshot-title-list" id="screenshotTitleList" aria-live="polite"></div>
         </section>
 
@@ -117,6 +117,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js?v=20260630-login-upload-fix"></script>
-  <script src="upload.js?v=20260701-final-docs"></script>
+  <script src="upload.js?v=20260701-custom-file-inputs"></script>
 </body>
 </html>
