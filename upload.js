@@ -52,9 +52,9 @@ function escapeHtml(value) {
 }
 
 function statusLabel(value) {
-  if (value === "ok") return "Работает";
-  if (value === "bad") return "Сломан";
-  return "Проверить";
+  if (value === "ok") return "Works";
+  if (value === "bad") return "Broken";
+  return "Needs check";
 }
 
 function sanitizeStorageName(name) {
@@ -91,8 +91,8 @@ function selectedScreenshotFiles() {
 
 function buildRecord() {
   const file = refs.file.files?.[0];
-  if (!text(refs.name.value, "")) throw new Error("Введи название мода.");
-  if (!file || !/\.(zip|dll)$/i.test(file.name)) throw new Error("Прикрепи файл мода .zip или .dll.");
+  if (!text(refs.name.value, "")) throw new Error("Enter the mod name.");
+  if (!file || !/\.(zip|dll)$/i.test(file.name)) throw new Error("Attach a .zip or .dll mod file.");
   const summary = text(refs.summary.value, text(refs.description.value, refs.name.value));
   return {
     name: text(refs.name.value, "Untitled mod"),
@@ -109,9 +109,9 @@ function buildRecord() {
 }
 
 async function publish(record) {
-  if (!supabaseClient) throw new Error("Supabase не подключён. Сначала заполни supabase-config.js.");
+  if (!supabaseClient) throw new Error("Supabase is not connected. Fill supabase-config.js first.");
   const user = await getSupabaseUser();
-  if (!user) throw new Error("Сначала войди или создай аккаунт.");
+  if (!user) throw new Error("Log in or create an account first.");
   const modFile = await uploadFileToSupabase("mod-files", user.id, record.fileBlob);
   const screenshots = [];
   for (let index = 0; index < record.screenshots.length; index += 1) {
@@ -141,15 +141,15 @@ async function publish(record) {
 
 async function refreshAccount() {
   sessionUser = await getSupabaseUser();
-  const name = sessionUser?.email?.split("@")[0] || "Гость";
+  const name = sessionUser?.email?.split("@")[0] || "Guest";
   refs.profileName.textContent = name;
   refs.profileAvatar.alt = name;
-  refs.statusTitle.textContent = sessionUser ? "Можно публиковать" : "Нужен аккаунт";
-  refs.statusText.textContent = hasSupabase ? (sessionUser ? sessionUser.email : "Войди перед публикацией") : "Supabase не подключён";
+  refs.statusTitle.textContent = sessionUser ? "Ready to publish" : "Account required";
+  refs.statusText.textContent = hasSupabase ? (sessionUser ? sessionUser.email : "Log in before publishing") : "Supabase is not connected";
   refs.authBox.hidden = Boolean(sessionUser);
   refs.profileMenu.innerHTML = sessionUser
-    ? `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="${name}"><div><strong>${name}</strong><small>Supabase</small></div></div><button class="profile-menu-item danger" type="button" id="logoutButton">Выйти</button>`
-    : `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="Guest"><div><strong>Guest</strong><small>Нет входа</small></div></div><p>Войди на этой странице, чтобы опубликовать мод.</p>`;
+    ? `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="${name}"><div><strong>${name}</strong><small>Supabase</small></div></div><button class="profile-menu-item danger" type="button" id="logoutButton">Log out</button>`
+    : `<div class="profile-menu-head"><img class="avatar avatar-image large" src="assets/default-avatar.png" alt="Guest"><div><strong>Guest</strong><small>Not logged in</small></div></div><p>Log in on this page to publish a mod.</p>`;
   const logout = document.querySelector("#logoutButton");
   if (logout) logout.addEventListener("click", async () => { await supabaseClient.auth.signOut(); refs.profileMenu.hidden = true; await refreshAccount(); });
 }
@@ -160,38 +160,38 @@ function refreshScreenshotUrls() {
 }
 
 function updatePreview() {
-  const name = text(refs.name.value, "Название мода");
+  const name = text(refs.name.value, "Your mod name");
   const category = refs.category.value;
   const version = text(refs.version.value, "1.0.0");
   const build = text(refs.build.value, "23954373");
   const loader = text(refs.loader.value, "MelonLoader");
   const status = refs.status.value;
-  const summary = text(refs.description.value, text(refs.summary.value, "Опиши, что делает мод. Предпросмотр обновляется во время ввода."));
+  const summary = text(refs.description.value, text(refs.summary.value, "Describe what your mod does. The preview updates while you type."));
   refs.previewMain.style.setProperty("--preview-accent", refs.accent.value);
   refs.previewMain.style.borderColor = refs.accent.value;
   refs.previewMain.className = `detail-main preview-bg-${refs.previewBg.value}`;
   refs.previewMeta.innerHTML = `<span class="tag">${escapeHtml(category)}</span><span class="tag">v${escapeHtml(version)}</span>`;
   refs.previewTitle.textContent = name;
   refs.previewSummary.textContent = summary;
-  refs.previewDownload.textContent = "Скачать";
+  refs.previewDownload.textContent = "Download";
   refs.previewDownload.style.background = refs.accent.value;
-  refs.previewInfo.innerHTML = `<div><strong>Билд игры</strong><span>${escapeHtml(build)}</span></div><div><strong>Лоадер</strong><span>${escapeHtml(loader)}</span></div><div><strong>Статус</strong><span>${statusLabel(status)}</span></div>`;
-  refs.previewScreenshots.innerHTML = `<h3>Скриншоты</h3>` + (screenshotUrls.length ? screenshotUrls.map((url, index) => {
-    const title = escapeHtml(getScreenshotTitle(index, `Скриншот ${index + 1}`));
+  refs.previewInfo.innerHTML = `<div><strong>Game build</strong><span>${escapeHtml(build)}</span></div><div><strong>Loader</strong><span>${escapeHtml(loader)}</span></div><div><strong>Status</strong><span>${statusLabel(status)}</span></div>`;
+  refs.previewScreenshots.innerHTML = `<h3>Screenshots</h3>` + (screenshotUrls.length ? screenshotUrls.map((url, index) => {
+    const title = escapeHtml(getScreenshotTitle(index, `Screenshot ${index + 1}`));
     return `<div class="screenshot-card"><img class="screenshot-image" src="${url}" alt="${title}"><span>${title}</span></div>`;
-  }).join("") : [1, 2, 3].map((item) => `<div class="screenshot-card"><div class="screenshot-art">${item}</div><span>Место для скриншота ${item}</span></div>`).join(""));
+  }).join("") : [1, 2, 3].map((item) => `<div class="screenshot-card"><div class="screenshot-art">${item}</div><span>Screenshot slot ${item}</span></div>`).join(""));
 }
 
 async function auth(mode) {
-  if (!supabaseClient) { refs.accountMessage.textContent = "Supabase не подключён."; return; }
+  if (!supabaseClient) { refs.accountMessage.textContent = "Supabase is not connected."; return; }
   const email = refs.email.value.trim().toLowerCase();
   const password = refs.password.value;
-  if (!email || !password) { refs.accountMessage.textContent = "Введи email и пароль."; return; }
+  if (!email || !password) { refs.accountMessage.textContent = "Enter email and password."; return; }
   const result = mode === "signup"
     ? await supabaseClient.auth.signUp({ email, password })
     : await supabaseClient.auth.signInWithPassword({ email, password });
   if (result.error) { refs.accountMessage.textContent = result.error.message; return; }
-  refs.accountMessage.textContent = mode === "signup" ? "Аккаунт создан." : "Вход выполнен.";
+  refs.accountMessage.textContent = mode === "signup" ? "Account created." : "Logged in.";
   await refreshAccount();
 }
 
@@ -216,9 +216,9 @@ refs.form.addEventListener("submit", async (event) => {
   refs.publish.disabled = true;
   try {
     const record = buildRecord();
-    refs.uploadMessage.textContent = "Загружаю в Supabase...";
+    refs.uploadMessage.textContent = "Uploading to Supabase...";
     await publish(record);
-    refs.uploadMessage.textContent = "Мод опубликован. Теперь он должен появиться в каталоге.";
+    refs.uploadMessage.textContent = "Mod published. It should appear in the catalog now.";
     refs.form.reset();
     refreshScreenshotUrls();
     updatePreview();

@@ -278,7 +278,7 @@ function getAllMods() {
 function getCategories() {
   return ["All", ...new Set(getAllMods().map((mod) => mod.category || "Tools"))];
 }
-let currentLang = localStorage.getItem("auModsLang") || "ru";
+let currentLang = localStorage.getItem("auModsLang") || "en";
 let selectedCategory = "All";
 let selectedModId = null;
 let lastDetailBackground = null;
