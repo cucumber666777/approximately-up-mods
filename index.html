@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Approximately Up Mods</title>
-  <link rel="stylesheet" href="styles.css?v=20260701-final-docs">
+  <link rel="stylesheet" href="styles.css?v=20260701-public-guide-ru">
 </head>
 <body>
   <header class="topbar">
@@ -43,36 +43,25 @@
 
     <section class="guide-grid" aria-label="Site guide">
       <article class="guide-card">
-        <p class="eyebrow">Install</p>
-        <h3>How to install mods</h3>
+        <p class="eyebrow" data-i18n="guideInstallEyebrow"></p>
+        <h3 data-i18n="guideInstallTitle"></h3>
         <ol>
-          <li>Install the latest MelonLoader for Approximately Up.</li>
-          <li>Download the mod archive or DLL from a mod page.</li>
-          <li>If it is a ZIP, unpack it first and read the included README files.</li>
-          <li>Put DLL mods into the game <code>Mods</code> folder.</li>
-          <li>Launch the game once and check MelonLoader logs if something does not load.</li>
+          <li data-i18n="guideInstallStep1"></li>
+          <li data-i18n="guideInstallStep2"></li>
+          <li data-i18n="guideInstallStep3"></li>
+          <li data-i18n="guideInstallStep4"></li>
+          <li data-i18n="guideInstallStep5"></li>
         </ol>
       </article>
       <article class="guide-card">
-        <p class="eyebrow">Upload rules</p>
-        <h3>Before submitting</h3>
+        <p class="eyebrow" data-i18n="guideRulesEyebrow"></p>
+        <h3 data-i18n="guideRulesTitle"></h3>
         <ul>
-          <li>Upload only your own mod, or work you have permission to share.</li>
-          <li>Include a short description, supported game build, loader version and screenshots.</li>
-          <li>No harmful files, fake downloads, stolen work or misleading descriptions.</li>
-          <li>Every submitted mod is hidden until the site owner reviews it manually.</li>
+          <li data-i18n="guideRule1"></li>
+          <li data-i18n="guideRule2"></li>
+          <li data-i18n="guideRule3"></li>
+          <li data-i18n="guideRule4"></li>
         </ul>
-      </article>
-      <article class="guide-card owner-card">
-        <p class="eyebrow">Owner review</p>
-        <h3>Approving mods</h3>
-        <ol>
-          <li>Open the review email sent to <code>cucumber993993@gmail.com</code>.</li>
-          <li>Check the uploaded file, screenshots, description and author.</li>
-          <li>Open Supabase, go to <code>Table Editor -> mods</code>.</li>
-          <li>Find the row id from the email and set <code>published</code> to <code>true</code>.</li>
-          <li>The mod will appear in the public catalog after refresh.</li>
-        </ol>
       </article>
     </section>
     <section class="controls" data-i18n-aria="filtersAria">
@@ -201,6 +190,6 @@
   </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js?v=20260630-login-upload-fix"></script>
-  <script src="script.js?v=20260701-final-docs"></script>
+  <script src="script.js?v=20260701-public-guide-ru"></script>
 </body>
 </html>
